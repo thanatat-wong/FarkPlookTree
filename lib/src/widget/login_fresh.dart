@@ -136,6 +136,7 @@ class _LoginFreshState extends State<LoginFresh> {
             TextSpan(
                 text: widget.keyWord.notAccount + '\n',
                 style: TextStyle(
+                    fontFamily: 'Kanit',
                     color: widget.textColor ?? Color(0xFF0F2E48),
                     fontWeight: FontWeight.normal,
                     fontSize: 15)),
@@ -144,6 +145,7 @@ class _LoginFreshState extends State<LoginFresh> {
                 style: TextStyle(
                     decoration: TextDecoration.underline,
                     color: widget.textColor ?? Color(0xFF0F2E48),
+                    fontFamily: 'Kanit',
                     fontWeight: FontWeight.bold,
                     fontSize: 16)),
           ]),
