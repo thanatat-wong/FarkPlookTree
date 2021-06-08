@@ -23,11 +23,11 @@ class LoginFreshWords {
       this.hintLoginPassword = 'Password',
       this.recoverPassword = 'ลืมรหัสผ่าน',
       this.messageRecoverPassword =
-          'To recover the password, enter the email and press send email, you will receive an email so you can update your password. Only available for accounts created by username and password',
+          'ในการกู้คืนรหัสผ่าน ทางระบบจะส่งอีเมลล์สำหรับกู้คืนรหัสผ่านไปยัง\nอีเมลล์ที่ท่านใช้สมัครสมาชิกโปรดระบุอีเมลล์หรือชื่อผู้ใช้ของท่านและตรวจสอบที่กล่องข้อความ หลังจากกดปุ่มกู้คืนรหัสผ่าน',
       this.hintLoginUser = 'Username or email',
-      this.login = 'Login',
+      this.login = 'เข้าสู่ระบบ',
       this.exploreApp = 'เข้าสู่ระบบแบบไม่ระบุตัวตน',
       this.notAccount = 'หากยังไม่มีบัญชีผู้ใช้',
       this.signUp = 'สมัครสมาชิก',
-      this.textLoading = 'please wait ...'});
+      this.textLoading = 'กรุณารอสักครู่ ...'});
 }

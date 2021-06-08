@@ -48,17 +48,17 @@ class _MyAppState extends State<MyApp> {
     ];
 
     return LoginFresh(
-      pathLogo: 'assets/thumbnail.png',
-      isExploreApp: true,
-      functionExploreApp: () {
-        // develop what they want the ExploreApp to do when the user clicks
-      },
-      isFooter: true,
-      widgetFooter: this.widgetFooter(),
-      typeLoginModel: listLogin,
-      isSignUp: true,
-      widgetSignUp: this.widgetLoginFreshSignUp(),
-    );
+        pathLogo: 'assets/thumbnail.png',
+        isExploreApp: true,
+        functionExploreApp: () {
+          // develop what they want the ExploreApp to do when the user clicks
+        },
+        isFooter: true,
+        widgetFooter: this.widgetFooter(),
+        typeLoginModel: listLogin,
+        isSignUp: true,
+        widgetSignUp: this.widgetLoginFreshSignUp(),
+        widgetLoginAnonymous: this.widgetLoginAnonymous());
   }
 
   Widget widgetLoginFreshUserAndPassword() {
@@ -107,8 +107,8 @@ class _MyAppState extends State<MyApp> {
 
   Widget widgetFooter() {
     return LoginFreshFooter(
-      logo: 'assets/logo_footer.png',
-      text: 'Power by',
+      logo: 'assets/PATT_Foundation.png',
+      text: 'สนับสนุนโดย',
       funFooterLogin: () {
         // develop what they want the footer to do when the user clicks
       },
@@ -132,5 +132,39 @@ class _MyAppState extends State<MyApp> {
 
           isRequest(false);
         });
+  }
+
+  Widget widgetLoginAnonymous() {
+    List<LoginFreshTypeLoginModel> listLogin = [
+      LoginFreshTypeLoginModel(
+          callFunction: (BuildContext _buildContext) {
+            // develop what they want the facebook to do when the user clicks
+          },
+          logo: TypeLogo.facebook),
+      LoginFreshTypeLoginModel(
+          callFunction: (BuildContext _buildContext) {
+            // develop what they want the Google to do when the user clicks
+          },
+          logo: TypeLogo.google),
+      LoginFreshTypeLoginModel(
+          callFunction: (BuildContext _buildContext) {
+            Navigator.of(_buildContext).push(MaterialPageRoute(
+              builder: (_buildContext) => widgetLoginFreshUserAndPassword(),
+            ));
+          },
+          logo: TypeLogo.userPassword),
+    ];
+    return LoginAnonymous(
+      pathLogo: 'assets/thumbnail.png',
+      isExploreApp: true,
+      functionExploreApp: () {
+        // develop what they want the ExploreApp to do when the user clicks
+      },
+      isFooter: true,
+      widgetFooter: this.widgetFooter(),
+      typeLoginModel: listLogin,
+      isSignUp: true,
+      widgetSignUp: this.widgetLoginFreshSignUp(),
+    );
   }
 }

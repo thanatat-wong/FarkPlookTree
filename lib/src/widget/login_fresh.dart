@@ -41,6 +41,9 @@ class LoginFresh extends StatefulWidget {
   //model of key words used in login
   LoginFreshWords keyWord;
 
+  //widget login anonymous
+  final Widget widgetLoginAnonymous;
+
   LoginFresh(
       {@required this.pathLogo,
       this.typeLoginModel,
@@ -53,7 +56,8 @@ class LoginFresh extends StatefulWidget {
       this.backgroundColor,
       this.cardColor,
       this.textColor,
-      this.keyWord});
+      this.keyWord,
+      this.widgetLoginAnonymous});
 
   @override
   _LoginFreshState createState() => _LoginFreshState();
@@ -110,7 +114,15 @@ class _LoginFreshState extends State<LoginFresh> {
                           : SizedBox(
                               height: 20,
                             ),
-                      buildExploreApp(context),
+                      Text(
+                        'หรือ\n',
+                        style: TextStyle(
+                            color: widget.textColor ?? Color(0xFF0F2E48),
+                            fontFamily: 'Kanit',
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16),
+                      ),
+                      buildLoginAnonymous(context),
                       (widget.isSignUp == null || widget.isSignUp == false)
                           ? SizedBox()
                           : buildSignUp(),
@@ -158,11 +170,14 @@ class _LoginFreshState extends State<LoginFresh> {
     );
   }
 
-  Widget buildExploreApp(BuildContext context) {
+  Widget buildLoginAnonymous(BuildContext context) {
     return (widget.isExploreApp == null || widget.isExploreApp == false)
         ? SizedBox()
         : GestureDetector(
-            onTap: widget.functionExploreApp,
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_buildContext) => widget.widgetLoginAnonymous));
+            },
             child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.07,
                 width: (widget.typeLoginModel.length > 3)
@@ -181,7 +196,7 @@ class _LoginFreshState extends State<LoginFresh> {
                         widget.keyWord.exploreApp,
                         style: TextStyle(
                             color: widget.textColor ?? Color(0xFF0F2E48),
-                            fontSize: 15,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold),
                       )),
                     ))),
@@ -218,7 +233,7 @@ class _LoginFreshState extends State<LoginFresh> {
       child: Text(widget.keyWord.loginWith,
           style: TextStyle(
               color: widget.textColor ?? Color(0xFF0F2E48),
-              fontSize: 16,
+              fontSize: 20,
               fontWeight: FontWeight.bold)),
     );
   }

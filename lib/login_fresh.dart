@@ -9,3 +9,4 @@ export './src/widget/login_fresh_loading.dart';
 export './src/widget/login_fresh_reset_password.dart';
 export './src/widget/login_fresh_sign_up.dart';
 export './src/service/sign_up_model.dart';
+export './src/widget/login_anonymous.dart';

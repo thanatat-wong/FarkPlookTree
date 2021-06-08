@@ -119,7 +119,7 @@ class _LoginFreshSignUpState extends State<LoginFreshSignUp> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                        bottom: 5, left: 20, right: 20, top: 20),
+                        bottom: 5, left: 20, right: 20, top: 30),
                     child: TextField(
                         onChanged: (String value) {
                           this.signUpModel.email = value;
