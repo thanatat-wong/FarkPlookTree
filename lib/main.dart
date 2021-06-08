@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
     ];
 
     return LoginFresh(
-      pathLogo: 'assets/logo.png',
+      pathLogo: 'assets/thumbnail.png',
       isExploreApp: true,
       functionExploreApp: () {
         // develop what they want the ExploreApp to do when the user clicks
@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
           isRequest(false);
         });
       },
-      logo: './assets/logo_head.png',
+      logo: './assets/thumbnail.png',
       isFooter: true,
       widgetFooter: this.widgetFooter(),
       isResetPassword: true,
@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget widgetResetPassword() {
     return LoginFreshResetPassword(
-      logo: 'assets/logo_head.png',
+      logo: 'assets/thumbnail.png',
       funResetPassword:
           (BuildContext _context, Function isRequest, String email) {
         isRequest(true);
@@ -118,7 +118,7 @@ class _MyAppState extends State<MyApp> {
     return LoginFreshSignUp(
         isFooter: true,
         widgetFooter: this.widgetFooter(),
-        logo: 'assets/logo_head.png',
+        logo: 'assets/thumbnail.png',
         funSignUp: (BuildContext _context, Function isRequest,
             SignUpModel signUpModel) {
           isRequest(true);

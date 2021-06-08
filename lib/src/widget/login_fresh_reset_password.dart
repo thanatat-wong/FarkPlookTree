@@ -73,15 +73,11 @@ class _LoginFreshResetPasswordState extends State<LoginFreshResetPassword> {
                 children: <Widget>[
                   Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 50, vertical: 3),
-                        child: Hero(
-                          tag: 'hero-login',
-                          child: Image.asset(
-                            widget.logo,
-                            fit: BoxFit.contain,
-                          ),
+                      Align(
+                        alignment: FractionalOffset(0.2, 0.175),
+                        child: Image.asset(
+                          widget.logo,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ],
@@ -93,7 +89,7 @@ class _LoginFreshResetPasswordState extends State<LoginFreshResetPassword> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.7,
+              height: MediaQuery.of(context).size.height * 0.58,
               width: MediaQuery.of(context).size.width,
               decoration: new BoxDecoration(
                   color: Color(0xFFF3F3F5),

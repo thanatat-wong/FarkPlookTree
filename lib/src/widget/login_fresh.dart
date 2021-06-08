@@ -71,9 +71,10 @@ class _LoginFreshState extends State<LoginFresh> {
           child: Align(
             alignment: Alignment.topCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.45,
-              width: MediaQuery.of(context).size.width * 0.60,
-              child: Center(
+              height: MediaQuery.of(context).size.height * 1,
+              width: MediaQuery.of(context).size.width * 1,
+              child: Align(
+                alignment: FractionalOffset(0.2, 0.175),
                 child: Image.asset(
                   widget.pathLogo,
                   fit: BoxFit.contain,
@@ -85,7 +86,7 @@ class _LoginFreshState extends State<LoginFresh> {
         Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.55,
+              height: MediaQuery.of(context).size.height * 0.58,
               width: MediaQuery.of(context).size.width,
               decoration: new BoxDecoration(
                   color: widget.cardColor ?? Color(0xFFF3F3F5),
