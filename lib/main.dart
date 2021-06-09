@@ -1,8 +1,13 @@
+import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'login_fresh.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -16,14 +21,51 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        Provider<AuthenticationService>(
+          create: (_) => AuthenticationService(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+            create: (context) =>
+                context.read<AuthenticationService>().authStateChanges),
+      ],
+      child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           fontFamily: 'Kanit',
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: Scaffold(body: buildLoginFresh()));
+        home: AuthenticationWrapper(),
+        // Scaffold(body: buildLoginFresh())
+      ),
+    );
+  }
+}
+
+class AuthenticationWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User>();
+    if (firebaseUser != null) {
+      return Scaffold(
+        body: Container(
+          margin: EdgeInsets.fromLTRB(175, 175, 0, 0),
+          child: Column(
+            children: [
+              Text('Home'),
+              ElevatedButton(
+                  onPressed: () {
+                    context.read<AuthenticationService>().signOut();
+                  },
+                  child: Text('Sign Out'))
+            ],
+          ),
+        ),
+      );
+    }
+    return Scaffold(body: buildLoginFresh());
   }
 
   LoginFresh buildLoginFresh() {
@@ -71,6 +113,33 @@ class _MyAppState extends State<MyApp> {
           print('-------------- function call----------------');
           print(user);
           print(password);
+          _context
+              .read<AuthenticationService>()
+              .signIn(email: user, password: password)
+              .then((value) => {
+                    if (value == "Signed in")
+                      {
+                        Navigator.of(_context).pop(MaterialPageRoute(
+                          builder: (_context) => Scaffold(
+                            body: Container(
+                              margin: EdgeInsets.fromLTRB(175, 175, 0, 0),
+                              child: Column(
+                                children: [
+                                  Text('Home'),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        _context
+                                            .read<AuthenticationService>()
+                                            .signOut();
+                                      },
+                                      child: Text('Sign Out'))
+                                ],
+                              ),
+                            ),
+                          ),
+                        )),
+                      }
+                  });
           print('-------------- end call----------------');
 
           isRequest(false);
