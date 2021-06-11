@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "405836205164",
+    "project_id": "farkplookrtree",
+    "storage_bucket": "farkplookrtree.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405836205164:android:9d0aa8b33210271c921c49",
+        "android_client_info": {
+          "package_name": "com.example.farkplooktreeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405836205164-me29qium4fu0henu839k6niu9osle05i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqWcf-dqpgZXmgsDu7ZYcALBR2KqXJ-Lc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405836205164-me29qium4fu0henu839k6niu9osle05i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "405836205164-0orf0ecd1or51nloq0qm6980d2aq3lrf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.farkplooktreeapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
