@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: AuthenticationWrapper(),
+        home: SettingPage(),
         // Scaffold(body: buildLoginFresh())
       ),
     );
