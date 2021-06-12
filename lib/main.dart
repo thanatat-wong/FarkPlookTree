@@ -1,4 +1,3 @@
-import 'package:farkplooktreeapp/pages/dummyPage.dart';
 import 'package:farkplooktreeapp/pages/homePage.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,5 @@
+import 'package:farkplooktreeapp/pages/farkPlook.dart';
+import 'package:farkplooktreeapp/pages/joinCampaignHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -8,12 +10,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int currentTab = 0;
+  final List<Widget> screens = [FarkPlook()];
+
+  final PageStorageBucket bucket = PageStorageBucket();
+  Widget currentScreen = FarkPlook();
+
   bool openpanel = false;
   @override
   Widget build(BuildContext context) {
     BorderRadiusGeometry radius = BorderRadius.only(
-      topLeft: Radius.circular(24.0),
-      topRight: Radius.circular(24.0),
+      topLeft: Radius.circular(25.0),
+      topRight: Radius.circular(25.0),
     );
     return Scaffold(
         backgroundColor: Color(0xff3EAF51),
@@ -29,18 +37,67 @@ class _HomeState extends State<Home> {
             });
           },
           maxHeight: MediaQuery.of(context).size.height * 0.75,
-          panel: Center(
-            child: Text("This is the sliding Widget"),
-          ),
-          collapsed: Container(
-            decoration:
-                BoxDecoration(color: Colors.blueGrey, borderRadius: radius),
-            child: Center(
-              child: Text(
-                "This is the collapsed Widget",
-                style: TextStyle(color: Colors.white),
+          minHeight: MediaQuery.of(context).size.height * 0.058,
+          panel: Column(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                  width: currentTab == 0 ? 4 : 0,
+                                  color: currentTab == 0
+                                      ? Colors.black
+                                      : Colors.transparent))),
+                      child: MaterialButton(
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        minWidth: MediaQuery.of(context).size.width / 2,
+                        onPressed: () {
+                          setState(() {
+                            currentScreen = FarkPlook();
+                            currentTab = 0;
+                          });
+                        },
+                        child: Text(
+                          "ฝากปลูก",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    width: currentTab == 1 ? 4 : 0,
+                                    color: currentTab == 1
+                                        ? Colors.black
+                                        : Colors.transparent))),
+                        child: MaterialButton(
+                          padding: EdgeInsets.only(top: 10, bottom: 10),
+                          minWidth: MediaQuery.of(context).size.width / 2,
+                          onPressed: () {
+                            setState(() {
+                              currentScreen = JoinCampaign();
+                              currentTab = 1;
+                            });
+                          },
+                          child: Text("ร่วมแคมเปญ",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                        )),
+                  ],
+                ),
               ),
-            ),
+              PageStorage(
+                child: currentScreen,
+                bucket: bucket,
+              )
+            ],
           ),
           body: openpanel == true
               ? Container(
