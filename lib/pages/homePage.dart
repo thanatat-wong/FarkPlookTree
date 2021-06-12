@@ -1,3 +1,4 @@
+import 'package:farkplooktreeapp/Pages/SettingPage/Setting.dart';
 import 'package:farkplooktreeapp/pages/farkPlook.dart';
 import 'package:farkplooktreeapp/pages/joinCampaignHome.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,17 @@ class _HomeState extends State<Home> {
       topRight: Radius.circular(25.0),
     );
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          actions: [
+            IconButton(icon: Icon(Icons.settings), onPressed: (){
+              Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext context){
+                return SettingPage();
+              }));
+            })
+          ],
+        ),
         backgroundColor: Color(0xff3EAF51),
         body: SlidingUpPanel(
           onPanelOpened: () {

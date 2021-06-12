@@ -1,4 +1,4 @@
-import 'package:farkplooktreeapp/pages/homePage.dart';
+import 'package:farkplooktreeapp/Pages/homePage.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: SettingPage(),
+        home: AuthenticationWrapper(),
         // Scaffold(body: buildLoginFresh())
       ),
     );
@@ -50,7 +50,10 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
     if (firebaseUser != null) {
-      return Scaffold(
+      return
+      Home();
+      /*
+       Scaffold(
         body: Container(
           margin: EdgeInsets.fromLTRB(175, 175, 0, 0),
           child: Column(
@@ -64,7 +67,7 @@ class AuthenticationWrapper extends StatelessWidget {
             ],
           ),
         ),
-      );
+      );*/
     }
     return Scaffold(body: buildLoginFresh());
   }
