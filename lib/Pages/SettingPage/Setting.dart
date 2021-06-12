@@ -40,11 +40,11 @@ class _SettingPageState extends State<SettingPage> {
         body: Column(
           children: [
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Container(),
             ),
             Expanded(
-              flex: 7,
+              flex: 8,
               child: Container(
                 color: Colors.white,
                 child: Column(
