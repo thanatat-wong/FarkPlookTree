@@ -1,3 +1,5 @@
+import 'package:farkplooktreeapp/Pages/Setting.dart';
+import 'package:farkplooktreeapp/Pages/campaignHistory.dart';
 import 'package:farkplooktreeapp/Pages/homePage.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:flutter/material.dart';

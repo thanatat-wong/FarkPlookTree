@@ -1,10 +1,11 @@
+import 'package:farkplooktreeapp/Pages/campaignHistory.dart';
+import 'package:farkplooktreeapp/Pages/donationPage.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:farkplooktreeapp/login_fresh.dart';
 import 'package:farkplooktreeapp/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:farkplooktreeapp/main.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -16,6 +17,11 @@ class _SettingPageState extends State<SettingPage> {
       AuthenticationService(FirebaseAuth.instance);
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User user = auth.currentUser;
+    final uid = user.uid;
+    print("UID:"+uid);
+    print(user.displayName);
     return MultiProvider(
       providers: [
         Provider<AuthenticationService>(
@@ -45,7 +51,37 @@ class _SettingPageState extends State<SettingPage> {
           children: [
             Expanded(
               flex: 2,
-              child: Container(),
+              child: Container(
+               padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 5.0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
+                      child: Image.asset("assets/images_login_fresh_34_/apple.png",
+                      width: 100,),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 40, 0, 20),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(user.displayName,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold
+                            ),),
+                            Text(user.email,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                            ),),
+                          ],
+                        ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             Expanded(
               flex: 8,
@@ -58,7 +94,7 @@ class _SettingPageState extends State<SettingPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AuthenticationWrapper()));
+                                builder: (context) => donationPage()));
                       },
                       child: Container(
                           padding: EdgeInsets.symmetric(
@@ -87,7 +123,7 @@ class _SettingPageState extends State<SettingPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AuthenticationWrapper()));
+                                builder: (context) => campaignHistory()));
                       },
                       child: Container(
                           padding: EdgeInsets.symmetric(
