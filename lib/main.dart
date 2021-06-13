@@ -29,10 +29,10 @@ class _MyAppState extends State<MyApp> {
         ),
         StreamProvider(
             create: (context) =>
-                context.read<AuthenticationService>().authStateChanges),
+                context.read<AuthenticationService>().currentUser),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'FarkPlookTree',
         theme: ThemeData(
           fontFamily: 'Kanit',
           primarySwatch: Colors.blue,
@@ -50,24 +50,7 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
     if (firebaseUser != null) {
-      return
-      Home();
-      /*
-       Scaffold(
-        body: Container(
-          margin: EdgeInsets.fromLTRB(175, 175, 0, 0),
-          child: Column(
-            children: [
-              Text('Home'),
-              ElevatedButton(
-                  onPressed: () {
-                    context.read<AuthenticationService>().signOut();
-                  },
-                  child: Text('Sign Out'))
-            ],
-          ),
-        ),
-      );*/
+      return Home();
     }
     return Scaffold(body: buildLoginFresh());
   }
@@ -76,12 +59,12 @@ class AuthenticationWrapper extends StatelessWidget {
     List<LoginFreshTypeLoginModel> listLogin = [
       LoginFreshTypeLoginModel(
           callFunction: (BuildContext _buildContext) {
-            // develop what they want the facebook to do when the user clicks
+            _buildContext.read<AuthenticationService>().signInWithFacebook();
           },
           logo: TypeLogo.facebook),
       LoginFreshTypeLoginModel(
           callFunction: (BuildContext _buildContext) {
-            // develop what they want the Google to do when the user clicks
+            _buildContext.read<AuthenticationService>().signInWithGoogle();
           },
           logo: TypeLogo.google),
       LoginFreshTypeLoginModel(
@@ -124,23 +107,7 @@ class AuthenticationWrapper extends StatelessWidget {
                     if (value == "Signed in")
                       {
                         Navigator.of(_context).pop(MaterialPageRoute(
-                          builder: (_context) => Scaffold(
-                            body: Container(
-                              margin: EdgeInsets.fromLTRB(175, 175, 0, 0),
-                              child: Column(
-                                children: [
-                                  Text('Home'),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        _context
-                                            .read<AuthenticationService>()
-                                            .signOut();
-                                      },
-                                      child: Text('Sign Out'))
-                                ],
-                              ),
-                            ),
-                          ),
+                          builder: (_context) => Home(),
                         )),
                       }
                   });
@@ -169,6 +136,9 @@ class AuthenticationWrapper extends StatelessWidget {
         Future.delayed(Duration(seconds: 2), () {
           print('-------------- function call----------------');
           print(email);
+          print(
+              _context.read<AuthenticationService>().sendRecoveryEmail(email));
+
           print('-------------- end call----------------');
           isRequest(false);
         });
@@ -203,6 +173,12 @@ class AuthenticationWrapper extends StatelessWidget {
           print(signUpModel.surname);
           print(signUpModel.name);
 
+          _context.read<AuthenticationService>().signUp(
+              email: signUpModel.email,
+              password: signUpModel.password,
+              firstname: signUpModel.name,
+              lastname: signUpModel.surname);
+
           isRequest(false);
         });
   }
@@ -211,12 +187,12 @@ class AuthenticationWrapper extends StatelessWidget {
     List<LoginFreshTypeLoginModel> listLogin = [
       LoginFreshTypeLoginModel(
           callFunction: (BuildContext _buildContext) {
-            // develop what they want the facebook to do when the user clicks
+            _buildContext.read<AuthenticationService>().signInWithFacebook();
           },
           logo: TypeLogo.facebook),
       LoginFreshTypeLoginModel(
           callFunction: (BuildContext _buildContext) {
-            // develop what they want the Google to do when the user clicks
+            _buildContext.read<AuthenticationService>().signInWithGoogle();
           },
           logo: TypeLogo.google),
       LoginFreshTypeLoginModel(

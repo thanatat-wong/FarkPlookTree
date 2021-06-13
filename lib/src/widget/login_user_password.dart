@@ -104,7 +104,7 @@ class _LoginFreshUserAndPasswordState extends State<LoginFreshUserAndPassword> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.58,
+              height: MediaQuery.of(context).size.height * 0.56,
               width: MediaQuery.of(context).size.width,
               decoration: new BoxDecoration(
                   color: Color(0xFFF3F3F5),

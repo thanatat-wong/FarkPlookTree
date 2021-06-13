@@ -78,7 +78,7 @@ class _LoginFreshState extends State<LoginFresh> {
               height: MediaQuery.of(context).size.height * 1,
               width: MediaQuery.of(context).size.width * 1,
               child: Align(
-                alignment: FractionalOffset(0.2, 0.175),
+                alignment: FractionalOffset(0.14, 0.14),
                 child: Image.asset(
                   widget.pathLogo,
                   fit: BoxFit.contain,

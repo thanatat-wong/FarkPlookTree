@@ -33,6 +33,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_swiper: ^1.1.6
   sliding_up_panel: ^2.0.0+1
+  google_sign_in: ^4.5.9
+  flutter_login_facebook: ^0.5.0
 
 dev_dependencies:
   flutter_test:

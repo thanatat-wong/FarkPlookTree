@@ -12,7 +12,8 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  final AuthenticationService _auth = AuthenticationService(FirebaseAuth.instance);
+  final AuthenticationService _auth =
+      AuthenticationService(FirebaseAuth.instance);
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -22,8 +23,9 @@ class _SettingPageState extends State<SettingPage> {
         ),
         StreamProvider(
             create: (context) =>
-                context.read<AuthenticationService>().authStateChanges),],
-          child: Scaffold(
+                context.read<AuthenticationService>().currentUser),
+      ],
+      child: Scaffold(
         appBar: AppBar(
             iconTheme: IconThemeData(color: Colors.white),
             backgroundColor: Color(0xFF3EAF51),
@@ -34,7 +36,9 @@ class _SettingPageState extends State<SettingPage> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18),
             )),
         backgroundColor: Color(0XFF3EAF51),
         body: Column(
@@ -63,8 +67,8 @@ class _SettingPageState extends State<SettingPage> {
                           height: 60,
                           decoration: BoxDecoration(
                               border: Border(
-                                  bottom:
-                                      BorderSide(width: 1, color: Colors.grey))),
+                                  bottom: BorderSide(
+                                      width: 1, color: Colors.grey))),
                           child: Row(
                             children: [
                               Icon(Icons.history),
@@ -92,8 +96,8 @@ class _SettingPageState extends State<SettingPage> {
                           height: 60,
                           decoration: BoxDecoration(
                               border: Border(
-                                  bottom:
-                                      BorderSide(width: 1, color: Colors.grey))),
+                                  bottom: BorderSide(
+                                      width: 1, color: Colors.grey))),
                           child: Row(
                             children: [
                               Icon(Icons.done_all),
@@ -121,8 +125,8 @@ class _SettingPageState extends State<SettingPage> {
                           height: 60,
                           decoration: BoxDecoration(
                               border: Border(
-                                  bottom:
-                                      BorderSide(width: 1, color: Colors.grey))),
+                                  bottom: BorderSide(
+                                      width: 1, color: Colors.grey))),
                           child: Row(
                             children: [
                               Icon(Icons.filter_frames),
@@ -138,8 +142,9 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     InkWell(
                       onTap: () async {
-                        await _auth.signOut().then((value) => 
-                        Navigator.of(context).pop());
+                        await _auth
+                            .signOut()
+                            .then((value) => Navigator.of(context).pop());
                       },
                       child: Container(
                           padding: EdgeInsets.symmetric(
@@ -148,15 +153,16 @@ class _SettingPageState extends State<SettingPage> {
                           height: 60,
                           decoration: BoxDecoration(
                               border: Border(
-                                  bottom:
-                                      BorderSide(width: 1, color: Colors.grey))),
+                                  bottom: BorderSide(
+                                      width: 1, color: Colors.grey))),
                           child: Row(
                             children: [
                               Icon(Icons.power_settings_new, color: Colors.red),
                               SizedBox(width: 10.0),
                               Text(
                                 "ออกจากระบบ",
-                                style: TextStyle(fontSize: 15, color: Colors.red),
+                                style:
+                                    TextStyle(fontSize: 15, color: Colors.red),
                               ),
                             ],
                           )),

@@ -1,3 +1,6 @@
+import 'package:farkplooktreeapp/Pages/homePage.dart';
+import 'package:farkplooktreeapp/auth/authentication_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../config/language.dart';
@@ -99,7 +102,7 @@ class _LoginAnonymousState extends State<LoginAnonymous> {
           Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.58,
+                height: MediaQuery.of(context).size.height * 0.56,
                 width: MediaQuery.of(context).size.width,
                 decoration: new BoxDecoration(
                     color: widget.cardColor ?? Color(0xFFF3F3F5),
@@ -182,12 +185,17 @@ class _LoginAnonymousState extends State<LoginAnonymous> {
   }
 
   Widget buildLoginAnonymous(BuildContext context) {
+    final AuthenticationService _auth =
+        AuthenticationService(FirebaseAuth.instance);
     return (widget.isExploreApp == null || widget.isExploreApp == false)
         ? SizedBox()
         : GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_buildContext) => widget.widgetSignUp));
+              _auth.signInAnonymous().then(
+                    (value) => Navigator.of(context).pop(MaterialPageRoute(
+                      builder: (_context) => Home(),
+                    )),
+                  );
             },
             child: SizedBox(
               width: 100,
