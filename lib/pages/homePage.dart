@@ -1,4 +1,4 @@
-import 'package:farkplooktreeapp/Pages/SettingPage/Setting.dart';
+import 'package:farkplooktreeapp/Pages/Setting.dart';
 import 'package:farkplooktreeapp/pages/farkPlook.dart';
 import 'package:farkplooktreeapp/pages/joinCampaignHome.dart';
 import 'package:flutter/material.dart';
