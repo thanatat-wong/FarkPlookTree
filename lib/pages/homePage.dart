@@ -1,6 +1,7 @@
 import 'package:farkplooktreeapp/Pages/Setting.dart';
 import 'package:farkplooktreeapp/pages/farkPlook.dart';
 import 'package:farkplooktreeapp/pages/joinCampaignHome.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -20,6 +21,9 @@ class _HomeState extends State<Home> {
   bool openpanel = false;
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User user = auth.currentUser;
+    final uid = user.uid;
     BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(25.0),
       topRight: Radius.circular(25.0),
@@ -30,14 +34,20 @@ class _HomeState extends State<Home> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           actions: [
-            IconButton(
-                icon: Icon(Icons.settings),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return SettingPage();
-                  }));
-                })
+            user.isAnonymous
+                ? IconButton(
+                    icon: Icon(Icons.logout),
+                    onPressed: () {
+                      auth.signOut();
+                    })
+                : IconButton(
+                    icon: Icon(Icons.settings),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (BuildContext context) {
+                        return SettingPage();
+                      }));
+                    })
           ],
         ),
         backgroundColor: Color(0xff3EAF51),
