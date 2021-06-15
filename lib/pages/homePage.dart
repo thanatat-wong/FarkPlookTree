@@ -29,6 +29,7 @@ class _HomeState extends State<Home> {
       topRight: Radius.circular(25.0),
     );
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
