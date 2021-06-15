@@ -88,7 +88,6 @@ class _FarkPlookState extends State<FarkPlook> {
                                 ),
                                 color: fiftyBtn ? Colors.grey : Colors.white,
                                 onPressed: () => {
-                                  currentFocus.unfocus(),
                                   setState(() {
                                     fiveBtn = false;
                                     twentyBtn = false;
@@ -106,7 +105,6 @@ class _FarkPlookState extends State<FarkPlook> {
                                 ),
                                 color: hundredBtn ? Colors.grey : Colors.white,
                                 onPressed: () => {
-                                  currentFocus.unfocus(),
                                   setState(() {
                                     fiveBtn = false;
                                     twentyBtn = false;
