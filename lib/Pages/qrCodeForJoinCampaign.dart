@@ -1,3 +1,4 @@
+import 'package:farkplooktreeapp/Pages/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,6 +48,8 @@ class _qrCodeForJoinCampaignState extends State<qrCodeForJoinCampaign> {
             ),
             SizedBox(height: 20.0),
             Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: SizedBox(
                 width: 350,
                 height: 160,
@@ -140,9 +143,11 @@ class _qrCodeForJoinCampaignState extends State<qrCodeForJoinCampaign> {
             ),
             SizedBox(height: 10.0),
             Card(
+              shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
               child: SizedBox(
                 width: 350,
-                height: 270,
+                height: 290,
                 child: Column(
                   children: [
                     SizedBox(height: 10.0),
@@ -168,17 +173,39 @@ class _qrCodeForJoinCampaignState extends State<qrCodeForJoinCampaign> {
                             fontWeight: FontWeight.bold),
                       )),
                     ),
-                    Container(child: 
-                    Image.asset("assets/images_login_fresh_34_/qrcode.jpg"),
-                    width: 150, height: 150),
-                    Text("Code: 7QX56A",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold
-                    ),),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          child: Image.asset(
+                              "assets/images_login_fresh_34_/qrcode.jpg"),
+                          width: 150,
+                          height: 150),
+                    ),
+                    Text(
+                      "Code: 7QX56A",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ],
                 ),
               ),
             ),
+            SizedBox(height: 10.0),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.85,
+              child: FlatButton(
+                child: Text(
+                  "กลับสู่หน้าหลัก",
+                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                color: Color(0xFF0F3754),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Home()));
+                },
+              ),
+            )
           ],
         ),
       ),

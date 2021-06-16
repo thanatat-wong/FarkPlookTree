@@ -47,6 +47,8 @@ class _joinCampaignState extends State<joinCampaign> {
             ),
             SizedBox(height: 20.0),
             Card(
+              shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
               child: SizedBox(
                 width: 350,
                 height: 160,
@@ -140,6 +142,8 @@ class _joinCampaignState extends State<joinCampaign> {
             ),
             SizedBox(height: 10.0),
             Card(
+              shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
               child: SizedBox(
                 width: 350,
                 height: 270,
