@@ -42,7 +42,101 @@ class _campaignHistoryState extends State<campaignHistory> {
                 ),),
               ),
             ),
-            
+            SizedBox(height: 20.0),
+            Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: SizedBox(
+                width: 350,
+                height: 160,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(14, 10, 15, 10),
+                      child: Image.asset(
+                          "assets/images_login_fresh_34_/image 23.png"),
+                    ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 15, 165, 0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.13,
+                            height: MediaQuery.of(context).size.height * 0.03,
+                            decoration: BoxDecoration(
+                                color: Color(0XFF0F3754),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(3.0))),
+                            child: new Center(
+                              child: Text(
+                                "Volunteer",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 10),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 5.0),
+                        Container(
+                          width: MediaQuery.of(context).size.height * 0.27,
+                          child: Text(
+                            "อาสาปลูกป่าเพื่ออนุรักษ์กวางลายดาว สวนสัตว์ขอนแก่น",
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(height: 5.0),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 60, 0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_today,
+                                size: 15,
+                              ),
+                              SizedBox(width: 5.0),
+                              Text(
+                                "23 กรกฎาคม 2564 7:00 - 15:00 น.",
+                                style: TextStyle(fontSize: 10),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 6.0),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 132, 0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.location_on, size: 15),
+                              SizedBox(width: 5.0),
+                              Text(
+                                "สวนสัตว์ขอนแก่น",
+                                style: TextStyle(fontSize: 10),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 6.0),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 150, 0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.people, size: 15),
+                              SizedBox(width: 5.0),
+                              Text(
+                                "29 ผู้เข้าร่วม",
+                                style: TextStyle(fontSize: 10),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
