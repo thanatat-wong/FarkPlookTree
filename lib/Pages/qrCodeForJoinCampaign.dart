@@ -1,15 +1,16 @@
+import 'package:farkplooktreeapp/Pages/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class campaignHistory extends StatefulWidget {
+class qrCodeForJoinCampaign extends StatefulWidget {
   @override
-  _campaignHistoryState createState() => _campaignHistoryState();
+  _qrCodeForJoinCampaignState createState() => _qrCodeForJoinCampaignState();
 }
 
-class _campaignHistoryState extends State<campaignHistory> {
+class _qrCodeForJoinCampaignState extends State<qrCodeForJoinCampaign> {
   final AuthenticationService _auth =
       AuthenticationService(FirebaseAuth.instance);
   @override
@@ -24,22 +25,25 @@ class _campaignHistoryState extends State<campaignHistory> {
                 context.read<AuthenticationService>().currentUser),
       ],
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
-            iconTheme: IconThemeData(color: Colors.white),
-            backgroundColor: Color(0xFF3EAF51),
-            centerTitle: true,
-            elevation: 0,),
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Color(0xFF3EAF51),
+          centerTitle: true,
+          elevation: 0,
+        ),
         backgroundColor: Color(0XFF3EAF51),
         body: Column(
           children: [
             Center(
               child: Container(
-                child: Text("แคมเปญที่เคยเข้าร่วม",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25.0,
-                  color: Colors.white
-                ),),
+                child: Text(
+                  "ร่วมแคมเปญ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25.0,
+                      color: Colors.white),
+                ),
               ),
             ),
             SizedBox(height: 20.0),
@@ -137,6 +141,71 @@ class _campaignHistoryState extends State<campaignHistory> {
                 ),
               ),
             ),
+            SizedBox(height: 10.0),
+            Card(
+              shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+              child: SizedBox(
+                width: 350,
+                height: 290,
+                child: Column(
+                  children: [
+                    SizedBox(height: 10.0),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 240, 0),
+                      child: Container(
+                        child: Text(
+                          "QR Code",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(13, 5, 10, 0),
+                      child: Container(
+                          child: Text(
+                        "โปรดแคปหน้าจอและนำ QR Code นี้มายืนยันเข้าร่วมกิจกรรมกับเจ้าหน้าที่ในวันและเวลาดังกล่าวที่ท่านลงทะเบียน",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFFDD582D),
+                            fontWeight: FontWeight.bold),
+                      )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          child: Image.asset(
+                              "assets/images_login_fresh_34_/qrcode.jpg"),
+                          width: 150,
+                          height: 150),
+                    ),
+                    Text(
+                      "Code: 7QX56A",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.85,
+              child: FlatButton(
+                child: Text(
+                  "กลับสู่หน้าหลัก",
+                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+                color: Color(0xFF0F3754),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Home()));
+                },
+              ),
+            )
           ],
         ),
       ),
