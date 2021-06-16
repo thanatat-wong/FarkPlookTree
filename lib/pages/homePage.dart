@@ -21,9 +21,6 @@ class _HomeState extends State<Home> {
   bool openpanel = false;
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User user = auth.currentUser;
-    final uid = user.uid;
     BorderRadiusGeometry radius = BorderRadius.only(
       topLeft: Radius.circular(25.0),
       topRight: Radius.circular(25.0),
@@ -34,22 +31,6 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          actions: [
-            user.isAnonymous
-                ? IconButton(
-                    icon: Icon(Icons.logout),
-                    onPressed: () {
-                      auth.signOut();
-                    })
-                : IconButton(
-                    icon: Icon(Icons.settings),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute<void>(
-                          builder: (BuildContext context) {
-                        return SettingPage();
-                      }));
-                    })
-          ],
         ),
         backgroundColor: Color(0xff3EAF51),
         body: SlidingUpPanel(
