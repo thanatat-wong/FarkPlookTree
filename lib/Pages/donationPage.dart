@@ -1,3 +1,4 @@
+import 'package:farkplooktreeapp/components/farkPlookCard.dart';
 import 'package:flutter/material.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,7 +43,9 @@ class _donationPageState extends State<donationPage> {
                 ),),
               ),
             ),
-            
+            SizedBox(height: 10.0),
+            FarkPlookCard(),
+            FarkPlookCard(),
           ],
         ),
       ),
