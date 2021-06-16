@@ -1,3 +1,4 @@
+import 'package:farkplooktreeapp/Pages/joinCampaign.dart';
 import 'package:flutter/material.dart';
 
 class JoinCampaign extends StatefulWidget {
@@ -31,25 +32,27 @@ class _JoinCampaignState extends State<JoinCampaign> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 15, 0, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 6.0),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.20,
+                        width: MediaQuery.of(context).size.width * 0.17,
                         height: MediaQuery.of(context).size.height * 0.03,
-                        child: FlatButton(
+                        decoration: BoxDecoration(
+                            color: Color(0XFF0F3754),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(3.0))),
+                        child: new Center(
                           child: Text(
                             "Volunteer",
-                            style: TextStyle(fontSize: 11),
+                            style: TextStyle(color: Colors.white, fontSize: 11),
+                            textAlign: TextAlign.center,
                           ),
-                          color: Color(0xFFDD582D),
-                          textColor: Colors.white,
-                          onPressed: () {},
                         ),
                       ),
-                      SizedBox(height: 6.0),
+                      SizedBox(height: 5.0),
                       Container(
                         width: MediaQuery.of(context).size.height * 0.26,
                         child: Text(
@@ -106,8 +109,8 @@ class _JoinCampaignState extends State<JoinCampaign> {
           child: Padding(
               padding: EdgeInsets.fromLTRB(
                   0,
-                  MediaQuery.of(context).size.width * 0.38,
-                  MediaQuery.of(context).size.width * 0.025,
+                  MediaQuery.of(context).size.width * 0.40,
+                  MediaQuery.of(context).size.width * 0.040,
                   0),
               child: FlatButton(
                 child: Text(
@@ -120,7 +123,10 @@ class _JoinCampaignState extends State<JoinCampaign> {
                 color: Color(0xFF3EAF51),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => joinCampaign()));
+                },
               )),
         )
       ],
