@@ -57,9 +57,8 @@ class _HomeState extends State<Home> {
           panel: Column(
             children: [
               Align(
-                alignment: Alignment.topCenter,
+                alignment: Alignment.center,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       decoration: BoxDecoration(
@@ -120,13 +119,13 @@ class _HomeState extends State<Home> {
                   child: Stack(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 60),
+                        padding: EdgeInsets.only(top: 60),
                         alignment: Alignment.topCenter,
                         child: Image.asset('images/world2.png'),
                       ),
                       Container(
                         alignment: Alignment.topCenter,
-                        margin: EdgeInsets.only(top: 100),
+                        padding: EdgeInsets.only(top: 100),
                         child: Column(
                           children: [
                             Text(
