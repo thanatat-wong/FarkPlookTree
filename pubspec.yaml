@@ -36,6 +36,7 @@ dependencies:
   google_sign_in: ^4.5.9
   flutter_login_facebook: ^0.5.0
   flutter_toggle_tab: ^1.1.4
+  http: ^0.12.2
 
 dev_dependencies:
   flutter_test:
