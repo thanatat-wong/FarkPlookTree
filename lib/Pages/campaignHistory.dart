@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:farkplooktreeapp/model/myJoinedCampaign.dart';
+import 'package:farkplooktreeapp/models/myJoinedCampaign.dart';
 import 'package:flutter/material.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
