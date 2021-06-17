@@ -1,6 +1,8 @@
 import 'package:farkplooktreeapp/Pages/Setting.dart';
 import 'package:farkplooktreeapp/Pages/campaignHistory.dart';
+import 'package:farkplooktreeapp/Pages/donationPage.dart';
 import 'package:farkplooktreeapp/Pages/homePage.dart';
+import 'package:farkplooktreeapp/Pages/qrCodeForJoinCampaign.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,7 +42,7 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: Home(),
+        home: AuthenticationWrapper(),
         // Scaffold(body: buildLoginFresh())
       ),
     );
