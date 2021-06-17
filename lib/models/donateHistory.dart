@@ -20,21 +20,26 @@ class Donation {
     return Donation(
       displayName: json['displayname'],
       treeAmount: json['tree_amount'],
-      donateTime: json['donate_datetime'],
+      donateTime: DateTime.parse(json['donate_datetime']),
       message: json['message'],
       transNum: json['transaction_no'],
     );
   }
 }
 
-Future<Donation> fetchAlbum() async {
+Future<List<Donation>> fetchAlbum() async {
   final response =
       await http.get(Uri.parse('http://52.163.100.154/api/fpt/donatehistory'));
 
   if (response.statusCode == 200) {
+    List<Donation> dataList = [];
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    return Donation.fromJson(jsonDecode(response.body));
+    for (int i = 0; i < json.decode(response.body).length; i++) {
+      dataList.add(Donation.fromJson(jsonDecode(response.body)[i]));
+    }
+    print(response.body);
+    return dataList;
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.

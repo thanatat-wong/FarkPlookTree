@@ -26,26 +26,26 @@ class _donationPageState extends State<donationPage> {
       ],
       child: Scaffold(
         appBar: AppBar(
-            iconTheme: IconThemeData(color: Colors.white),
-            backgroundColor: Color(0xFF3EAF51),
-            centerTitle: true,
-            elevation: 0,),
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Color(0xFF3EAF51),
+          centerTitle: true,
+          elevation: 0,
+        ),
         backgroundColor: Color(0XFF3EAF51),
         body: Column(
           children: [
             Center(
               child: Container(
-                child: Text("ประวัติการบริจาค",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25.0,
-                  color: Colors.white
-                ),),
+                child: Text(
+                  "ประวัติการบริจาค",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25.0,
+                      color: Colors.white),
+                ),
               ),
             ),
             SizedBox(height: 10.0),
-            FarkPlookCard(),
-            FarkPlookCard(),
           ],
         ),
       ),

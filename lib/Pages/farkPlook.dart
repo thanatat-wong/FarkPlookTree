@@ -12,7 +12,7 @@ class FarkPlook extends StatefulWidget {
 }
 
 class _FarkPlookState extends State<FarkPlook> {
-  Future<Donation> futureAlbum;
+  Future<List<Donation>> futureAlbum;
 
   @override
   void initState() {
@@ -77,11 +77,21 @@ class _FarkPlookState extends State<FarkPlook> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    FutureBuilder<Donation>(
+                    FutureBuilder<List<Donation>>(
                       future: futureAlbum,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return Text(snapshot.data.displayName);
+                          return SizedBox(
+                            height: 600,
+                            width: 400,
+                            child: new ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              reverse: false,
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  FarkPlookCard(snapshot.data[index]),
+                            ),
+                          );
                         } else if (snapshot.hasError) {
                           return Text("${snapshot.error}");
                         }

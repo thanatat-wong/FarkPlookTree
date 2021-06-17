@@ -25,12 +25,31 @@ class _HomeState extends State<Home> {
       topLeft: Radius.circular(25.0),
       topRight: Radius.circular(25.0),
     );
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User user = auth.currentUser;
+    final uid = user.uid;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
+          actions: [
+            user.isAnonymous
+                ? IconButton(
+                    icon: Icon(Icons.logout),
+                    onPressed: () {
+                      auth.signOut();
+                    })
+                : IconButton(
+                    icon: Icon(Icons.settings),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (BuildContext context) {
+                        return SettingPage();
+                      }));
+                    })
+          ],
         ),
         backgroundColor: Color(0xff3EAF51),
         body: SlidingUpPanel(

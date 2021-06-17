@@ -1,8 +1,12 @@
+import 'package:farkplooktreeapp/models/donateHistory.dart';
 import 'package:flutter/material.dart';
 
 class FarkPlookCard extends StatelessWidget {
+  final Donation data;
+  FarkPlookCard(this.data);
   @override
   Widget build(BuildContext context) {
+    print(data);
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Card(
@@ -25,7 +29,7 @@ class FarkPlookCard extends StatelessWidget {
                   child: Container(
                       padding: EdgeInsets.only(left: 20),
                       child: Text(
-                        'น้องพริ้ว',
+                        data.displayName,
                         style: TextStyle(
                             color: Color(0xff0F3754),
                             fontSize: 16,
@@ -47,11 +51,20 @@ class FarkPlookCard extends StatelessWidget {
                             width: 70,
                             height: 25,
                             child: Text(
-                              "5 ต้น",
+                              data.treeAmount.toString(),
                               style: TextStyle(color: Colors.white),
                             )),
                       ),
-                      Text("Sep 20, 2021 12.30 ",
+                      Text(
+                          data.donateTime.month.toString() +
+                              " " +
+                              data.donateTime.day.toString() +
+                              ", " +
+                              data.donateTime.year.toString() +
+                              " " +
+                              data.donateTime.hour.toString() +
+                              ":" +
+                              data.donateTime.minute.toString(),
                           style: TextStyle(fontSize: 12))
                     ],
                   ))
