@@ -133,7 +133,7 @@ class CampaignCard extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(3.0))),
                     child: new Center(
                       child: Text(
-                        "Volunteer",
+                        data.type,
                         style: TextStyle(color: Colors.white, fontSize: 10),
                         textAlign: TextAlign.center,
                       ),
@@ -144,7 +144,7 @@ class CampaignCard extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.height * 0.27,
                   child: Text(
-                    "อาสาปลูกป่าเพื่ออนุรักษ์กวางลายดาว สวนสัตว์ขอนแก่น",
+                    data.name,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -173,7 +173,7 @@ class CampaignCard extends StatelessWidget {
                       Icon(Icons.location_on, size: 15),
                       SizedBox(width: 5.0),
                       Text(
-                        "สวนสัตว์ขอนแก่น",
+                        data.location,
                         style: TextStyle(fontSize: 10),
                       ),
                     ],

@@ -1,33 +1,43 @@
 class MyJoinedCampaign {
-  final String join_code;
+  final String type;
   final String name;
-  final String surname;
-  final String contact_email;
-  final String phone;
+  final DateTime from_datetime;
+  final DateTime to_datetime;
+  final String location;
+  final String thumbnail;
+  final String description;
+  final DateTime register_datetime;
+  final String join_code;
   final String campaign_no;
-  final String register_datetime;
   final bool isjoined;
 
   MyJoinedCampaign({
-    this.join_code,
+    this.type,
     this.name,
-    this.surname,
-    this.contact_email,
-    this.phone,
+    this.from_datetime,
+    this.to_datetime,
+    this.location,
+    this.thumbnail,
+    this.description,
+    this.join_code,
     this.campaign_no,
     this.isjoined,
     this.register_datetime,
   });
+
   factory MyJoinedCampaign.fromJson(Map<String, dynamic> json) {
     return MyJoinedCampaign(
-      join_code: json['join_code'],
+      type: json['type'],
       name: json['name'],
-      surname: json['surname'],
-      contact_email: json['contact_email'],
-      phone: json['phone'],
+      from_datetime: DateTime.parse(json['from_datetime']),
+      to_datetime: DateTime.parse(json['to_datetime']),
+      location: json['location'],
+      thumbnail: json['thumbnail'],
+      description: json['description'],
+      join_code: json['join_code'],
       campaign_no: json['campaign_no'].toString(),
       isjoined: (json['isjoined'] == 0) ? false : true,
-      register_datetime: json['register_datetime'],
+      register_datetime: DateTime.parse(json['register_datetime']),
     );
   }
 }
