@@ -63,28 +63,31 @@ class _donationPageState extends State<donationPage> {
               ),
             ),
             SizedBox(height: 10.0),
-            FutureBuilder<List<MyDonation>>(
-              future: myJoinCampaignList,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: SizedBox(
-                      height: 200,
-                      child: new ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        reverse: false,
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            DonationCard(snapshot.data.elementAt(index)),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: FutureBuilder<List<MyDonation>>(
+                future: myJoinCampaignList,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: SizedBox(
+                        height: 600,
+                        child: new ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          reverse: false,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              DonationCard(snapshot.data.elementAt(index)),
+                        ),
                       ),
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text("${snapshot.error}");
-                }
-                // By default, show a loading spinner.
-                return CircularProgressIndicator();
-              },
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+                  // By default, show a loading spinner.
+                  return CircularProgressIndicator();
+                },
+              ),
             ),
           ],
         ),
