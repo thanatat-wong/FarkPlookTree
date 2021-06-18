@@ -29,7 +29,7 @@ class _JoinCampaignState extends State<JoinCampaign> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.5,
+                      height: MediaQuery.of(context).size.height * 0.65,
                       width: MediaQuery.of(context).size.width * 1,
                       child: new ListView.builder(
                         scrollDirection: Axis.vertical,
