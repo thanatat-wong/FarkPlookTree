@@ -27,15 +27,29 @@ class FarkPlookCard extends StatelessWidget {
               ),
               Expanded(
                   flex: 5,
-                  child: Container(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        data.displayName,
-                        style: TextStyle(
-                            color: Color(0xff0F3754),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ))),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 7, 0, 0),
+                    child: Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              data.displayName,
+                              style: TextStyle(
+                                  color: Color(0xff0F3754),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              data.message,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        )),
+                  )),
               Expanded(
                   flex: 3,
                   child: Column(
