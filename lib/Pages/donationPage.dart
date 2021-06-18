@@ -1,4 +1,6 @@
+import 'package:farkplooktreeapp/components/donationCard.dart';
 import 'package:farkplooktreeapp/components/farkPlookCard.dart';
+import 'package:farkplooktreeapp/models/myDonateHistory.dart';
 import 'package:flutter/material.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,8 +13,23 @@ class donationPage extends StatefulWidget {
 }
 
 class _donationPageState extends State<donationPage> {
-  final AuthenticationService _auth =
-      AuthenticationService(FirebaseAuth.instance);
+  String uid;
+  Future<List<MyDonation>> myJoinCampaignList;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    uid = getUserID();
+    print(uid);
+    myJoinCampaignList = fetchDonateHistory(uid);
+  }
+
+  String getUserID() {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    uid = user.uid;
+    return uid;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -46,6 +63,29 @@ class _donationPageState extends State<donationPage> {
               ),
             ),
             SizedBox(height: 10.0),
+            FutureBuilder<List<MyDonation>>(
+              future: myJoinCampaignList,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Expanded(
+                    child: SizedBox(
+                      height: 200,
+                      child: new ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        reverse: false,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            DonationCard(snapshot.data.elementAt(index)),
+                      ),
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                // By default, show a loading spinner.
+                return CircularProgressIndicator();
+              },
+            ),
           ],
         ),
       ),
