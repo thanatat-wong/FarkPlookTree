@@ -9,12 +9,12 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
-class campaignHistory extends StatefulWidget {
+class CampaignHistory extends StatefulWidget {
   @override
-  _campaignHistoryState createState() => _campaignHistoryState();
+  _CampaignHistoryState createState() => _CampaignHistoryState();
 }
 
-class _campaignHistoryState extends State<campaignHistory> {
+class _CampaignHistoryState extends State<CampaignHistory> {
   String uid;
   Future<List<MyJoinedCampaign>> myJoinCampaignList;
 
@@ -126,7 +126,7 @@ class CampaignCard extends StatelessWidget {
                   cacheHeight: 120, cacheWidth: 100),
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 30, 165, 0),
@@ -164,15 +164,28 @@ class CampaignCard extends StatelessWidget {
                       ),
                       SizedBox(width: 5.0),
                       Text(
-                        (data.from_datetime.day.toString()==data.to_datetime.day.toString())?
-                        DateFormat('dd MMMM yyyy').format(data.from_datetime)+" "+
-                        DateFormat('kk:mm').format(data.from_datetime)+"-"+DateFormat('kk:mm').format(data.to_datetime)
-                        :(data.from_datetime.month.toString()==data.to_datetime.month.toString())?
-                        DateFormat('dd').format(data.from_datetime)+"-"+DateFormat('dd MMMM yyyy').format(data.to_datetime):
-                        DateFormat('dd MMMM yyyy kk:mm').format(data.from_datetime)+" -"+"\n"+DateFormat('dd MMMM yyyy kk:mm').format(data.to_datetime),
+                        (data.from_datetime.day.toString() ==
+                                data.to_datetime.day.toString())
+                            ? DateFormat('dd MMMM yyyy')
+                                    .format(data.from_datetime) +
+                                " " +
+                                DateFormat('kk:mm').format(data.from_datetime) +
+                                "-" +
+                                DateFormat('kk:mm').format(data.to_datetime)
+                            : (data.from_datetime.month.toString() ==
+                                    data.to_datetime.month.toString())
+                                ? DateFormat('dd').format(data.from_datetime) +
+                                    "-" +
+                                    DateFormat('dd MMMM yyyy')
+                                        .format(data.to_datetime)
+                                : DateFormat('dd MMMM yyyy kk:mm')
+                                        .format(data.from_datetime) +
+                                    " -" +
+                                    "\n" +
+                                    DateFormat('dd MMMM yyyy kk:mm')
+                                        .format(data.to_datetime),
                         style: TextStyle(fontSize: 10),
                       ),
-
                     ],
                   ),
                 ),
@@ -180,7 +193,6 @@ class CampaignCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 108, 0),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(Icons.location_on, size: 15),
                       SizedBox(width: 5.0),

@@ -128,7 +128,7 @@ class _SettingPageState extends State<SettingPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => campaignHistory()));
+                                builder: (context) => CampaignHistory()));
                       },
                       child: Container(
                           padding: EdgeInsets.symmetric(
