@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class campaignHistory extends StatefulWidget {
   @override
@@ -41,6 +42,7 @@ class _campaignHistoryState extends State<campaignHistory> {
       List<MyJoinedCampaign> dataList = [];
       // If the server did return a 200 OK response,
       // then parse the JSON.
+      print(response.body);
       for (int i = 0; i < json.decode(response.body).length; i++) {
         dataList.add(MyJoinedCampaign.fromJson(jsonDecode(response.body)[i]));
       }
@@ -82,7 +84,7 @@ class _campaignHistoryState extends State<campaignHistory> {
               if (snapshot.hasData) {
                 return Expanded(
                   child: SizedBox(
-                    height: 200,
+                    width: 365,
                     child: new ListView.builder(
                       scrollDirection: Axis.vertical,
                       reverse: false,
@@ -110,21 +112,24 @@ class CampaignCard extends StatelessWidget {
   CampaignCard(this.data);
   @override
   Widget build(BuildContext context) {
+    String _path = 'http://52.163.100.154';
+    var rtl;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: SizedBox(
-        width: 350,
-        height: 160,
+        height: 150,
         child: Row(
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(14, 10, 15, 10),
-              child: Image.asset("assets/images_login_fresh_34_/image 23.png"),
+              child: Image.network(_path + data.thumbnail,
+                  cacheHeight: 120, cacheWidth: 100),
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 15, 165, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 30, 165, 0),
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.13,
                     height: MediaQuery.of(context).size.height * 0.03,
@@ -133,7 +138,7 @@ class CampaignCard extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(3.0))),
                     child: new Center(
                       child: Text(
-                        "Volunteer",
+                        data.type,
                         style: TextStyle(color: Colors.white, fontSize: 10),
                         textAlign: TextAlign.center,
                       ),
@@ -144,13 +149,13 @@ class CampaignCard extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.height * 0.27,
                   child: Text(
-                    "อาสาปลูกป่าเพื่ออนุรักษ์กวางลายดาว สวนสัตว์ขอนแก่น",
+                    data.name,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(height: 5.0),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 60, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 100, 0),
                   child: Row(
                     children: [
                       Icon(
@@ -159,40 +164,47 @@ class CampaignCard extends StatelessWidget {
                       ),
                       SizedBox(width: 5.0),
                       Text(
-                        "23 กรกฎาคม 2564 7:00 - 15:00 น.",
+                        (data.from_datetime.day.toString()==data.to_datetime.day.toString())?
+                        DateFormat('dd MMMM yyyy').format(data.from_datetime)+" "+
+                        DateFormat('kk:mm').format(data.from_datetime)+"-"+DateFormat('kk:mm').format(data.to_datetime)
+                        :(data.from_datetime.month.toString()==data.to_datetime.month.toString())?
+                        DateFormat('dd').format(data.from_datetime)+"-"+DateFormat('dd MMMM yyyy').format(data.to_datetime):
+                        DateFormat('dd MMMM yyyy kk:mm').format(data.from_datetime)+" -"+"\n"+DateFormat('dd MMMM yyyy kk:mm').format(data.to_datetime),
                         style: TextStyle(fontSize: 10),
                       ),
+
                     ],
                   ),
                 ),
                 SizedBox(height: 6.0),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 132, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 108, 0),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(Icons.location_on, size: 15),
                       SizedBox(width: 5.0),
                       Text(
-                        "สวนสัตว์ขอนแก่น",
+                        data.location,
                         style: TextStyle(fontSize: 10),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 6.0),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 150, 0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.people, size: 15),
-                      SizedBox(width: 5.0),
-                      Text(
-                        "29 ผู้เข้าร่วม",
-                        style: TextStyle(fontSize: 10),
-                      ),
-                    ],
-                  ),
-                ),
+                // SizedBox(height: 6.0),
+                // Padding(
+                //   padding: const EdgeInsets.fromLTRB(0, 0, 150, 0),
+                //   child: Row(
+                //     children: [
+                //       Icon(Icons.people, size: 15),
+                //       SizedBox(width: 5.0),
+                //       Text(
+                //         "29 ผู้เข้าร่วม",
+                //         style: TextStyle(fontSize: 10),
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ],

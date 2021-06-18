@@ -20,7 +20,7 @@ class _SettingPageState extends State<SettingPage> {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User user = auth.currentUser;
     final uid = user.uid;
-    print("UID:"+uid);
+    print("UID:" + uid);
     print(user.displayName);
     return MultiProvider(
       providers: [
@@ -52,32 +52,37 @@ class _SettingPageState extends State<SettingPage> {
             Expanded(
               flex: 2,
               child: Container(
-               padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 5.0),
+                padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 5.0),
                 child: Row(
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
-                      child: Image.asset("assets/images_login_fresh_34_/apple.png",
-                      width: 100,),
+                      child: Image.asset(
+                        "assets/images_login_fresh_34_/apple.png",
+                        width: 100,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 40, 0, 20),
                       child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(user.displayName,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            user.displayName,
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold
-                            ),),
-                            Text(user.email,
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            user.email,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
-                            ),),
-                          ],
-                        ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -149,10 +154,7 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AuthenticationWrapper()));
+                        Navigator.pop(context);
                       },
                       child: Container(
                           padding: EdgeInsets.symmetric(
