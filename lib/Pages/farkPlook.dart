@@ -12,12 +12,15 @@ class FarkPlook extends StatefulWidget {
 }
 
 class _FarkPlookState extends State<FarkPlook> {
-  Future<List<Donation>> futureAlbum;
+  Future<List<Donation>> lastedDonationList;
+  Future<List<Donation>> topDonationList;
+  int selectedindex = 0;
 
   @override
   void initState() {
     super.initState();
-    futureAlbum = fetchAlbum();
+    lastedDonationList = fetchLastedDonation();
+    topDonationList = fetchTopDonation();
   }
 
   @override
@@ -62,6 +65,7 @@ class _FarkPlookState extends State<FarkPlook> {
                         selectedLabelIndex: (index) {
                           setState(() {
                             print("Selected Index $index");
+                            selectedindex = index;
                           });
                         },
                       ),
@@ -72,38 +76,73 @@ class _FarkPlookState extends State<FarkPlook> {
                     )
                   ],
                 )),
-            Expanded(
-              flex: 8,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    FutureBuilder<List<Donation>>(
-                      future: futureAlbum,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return SizedBox(
-                            height: 600,
-                            width: 400,
-                            child: new ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              reverse: false,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (BuildContext context, int index) =>
-                                  FarkPlookCard(snapshot.data[index]),
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text("${snapshot.error}");
-                        }
+            (selectedindex == 0)
+                ? Expanded(
+                    flex: 8,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          FutureBuilder<List<Donation>>(
+                            future: lastedDonationList,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return SizedBox(
+                                  height: 600,
+                                  width: 400,
+                                  child: new ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    reverse: false,
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) =>
+                                            FarkPlookCard(snapshot.data[index]),
+                                  ),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text("${snapshot.error}");
+                              }
 
-                        // By default, show a loading spinner.
-                        return CircularProgressIndicator();
-                      },
+                              // By default, show a loading spinner.
+                              return CircularProgressIndicator();
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  )
+                : Expanded(
+                    flex: 8,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          FutureBuilder<List<Donation>>(
+                            future: topDonationList,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return SizedBox(
+                                  height: 600,
+                                  width: 400,
+                                  child: new ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    reverse: false,
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) =>
+                                            FarkPlookCard(snapshot.data[index]),
+                                  ),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text("${snapshot.error}");
+                              }
+
+                              // By default, show a loading spinner.
+                              return CircularProgressIndicator();
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
             Expanded(
                 flex: 1,
                 child: Container(

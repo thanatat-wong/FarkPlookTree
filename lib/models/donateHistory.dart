@@ -27,7 +27,7 @@ class Donation {
   }
 }
 
-Future<List<Donation>> fetchAlbum() async {
+Future<List<Donation>> fetchLastedDonation() async {
   final response =
       await http.get(Uri.parse('http://52.163.100.154/api/fpt/donatehistory'));
 
@@ -38,6 +38,28 @@ Future<List<Donation>> fetchAlbum() async {
     for (int i = 0; i < json.decode(response.body).length; i++) {
       dataList.add(Donation.fromJson(jsonDecode(response.body)[i]));
     }
+    print('------------LASTED DONATION------------');
+    print(response.body);
+    return dataList;
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
+Future<List<Donation>> fetchTopDonation() async {
+  final response = await http
+      .get(Uri.parse('http://52.163.100.154/api/fpt/topdonatehistory'));
+
+  if (response.statusCode == 200) {
+    List<Donation> dataList = [];
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    for (int i = 0; i < json.decode(response.body).length; i++) {
+      dataList.add(Donation.fromJson(jsonDecode(response.body)[i]));
+    }
+    print('------------TOP DONATION------------');
     print(response.body);
     return dataList;
   } else {
