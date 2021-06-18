@@ -110,6 +110,7 @@ class CampaignCard extends StatelessWidget {
   CampaignCard(this.data);
   @override
   Widget build(BuildContext context) {
+    String _path = 'http://52.163.100.154';
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: SizedBox(
@@ -119,7 +120,8 @@ class CampaignCard extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(14, 10, 15, 10),
-              child: Image.asset("assets/images_login_fresh_34_/image 23.png"),
+              child: Image.network(_path + data.thumbnail,
+                  cacheHeight: 120, cacheWidth: 100),
             ),
             Column(
               children: [
