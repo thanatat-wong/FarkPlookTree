@@ -90,7 +90,7 @@ class _joinCampaignState extends State<joinCampaign> {
           title: Text("ร่วมแคมเปญ",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 25.0,
+                  fontSize: 20.0,
                   color: Colors.white)),
           iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Color(0xFF3EAF51),

@@ -58,50 +58,46 @@ class _CampaignHistoryState extends State<CampaignHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          "แคมเปญที่เคยเข้าร่วม",
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.white),
+        ),
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Color(0xFF3EAF51),
         centerTitle: true,
         elevation: 0,
       ),
       backgroundColor: Color(0XFF3EAF51),
-      body: Column(
-        children: [
-          Center(
-            child: Container(
-              child: Text(
-                "แคมเปญที่เคยเข้าร่วม",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25.0,
-                    color: Colors.white),
-              ),
-            ),
-          ),
-          SizedBox(height: 20.0),
-          FutureBuilder<List<MyJoinedCampaign>>(
-            future: myJoinCampaignList,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Expanded(
-                  child: SizedBox(
-                    width: 365,
-                    child: new ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      reverse: false,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (BuildContext context, int index) =>
-                          CampaignCard(snapshot.data.elementAt(index)),
+      body: Center(
+        child: Column(
+          children: [
+            SizedBox(height: 5.0),
+            FutureBuilder<List<MyJoinedCampaign>>(
+              future: myJoinCampaignList,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Expanded(
+                    child: SizedBox(
+                      width: 365,
+                      child: new ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        reverse: false,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            CampaignCard(snapshot.data.elementAt(index)),
+                      ),
                     ),
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-              // By default, show a loading spinner.
-              return CircularProgressIndicator();
-            },
-          ),
-        ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                // By default, show a loading spinner.
+                return CircularProgressIndicator();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

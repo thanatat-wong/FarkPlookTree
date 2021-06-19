@@ -1,7 +1,25 @@
+import 'package:farkplooktreeapp/Pages/paymentPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class FarkPlookDialog extends StatelessWidget {
+class FarkPlookDialog extends StatefulWidget {
   @override
+  State<FarkPlookDialog> createState() => _FarkPlookDialogState();
+}
+
+class _FarkPlookDialogState extends State<FarkPlookDialog> {
+  int plantNum;
+  @override
+  void initState() {
+    super.initState();
+    plantNum = 5;
+  }
+
+  clearTextInput() {
+    nameHolder.clear();
+  }
+
+  final nameHolder = TextEditingController();
   Widget build(BuildContext context) {
     return new Dialog(
       shape: RoundedRectangleBorder(
@@ -51,10 +69,21 @@ class FarkPlookDialog extends StatelessWidget {
                           width: 114,
                           height: 40,
                           child: OutlinedButton(
-                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              primary:
+                                  plantNum == 5 ? Colors.white : Colors.black,
+                              backgroundColor: plantNum == 5
+                                  ? Color(0xff40A848)
+                                  : Colors.white,
+                            ),
+                            onPressed: () {
+                              clearTextInput();
+                              setState(() {
+                                plantNum = 5;
+                              });
+                            },
                             child: Text(
                               "5 ต้น",
-                              style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
@@ -62,10 +91,21 @@ class FarkPlookDialog extends StatelessWidget {
                           width: 114,
                           height: 40,
                           child: OutlinedButton(
-                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              primary:
+                                  plantNum == 10 ? Colors.white : Colors.black,
+                              backgroundColor: plantNum == 10
+                                  ? Color(0xff40A848)
+                                  : Colors.white,
+                            ),
+                            onPressed: () {
+                              clearTextInput();
+                              setState(() {
+                                plantNum = 10;
+                              });
+                            },
                             child: Text(
                               "10 ต้น",
-                              style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
@@ -78,10 +118,21 @@ class FarkPlookDialog extends StatelessWidget {
                           width: 114,
                           height: 40,
                           child: OutlinedButton(
-                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              primary:
+                                  plantNum == 15 ? Colors.white : Colors.black,
+                              backgroundColor: plantNum == 15
+                                  ? Color(0xff40A848)
+                                  : Colors.white,
+                            ),
+                            onPressed: () {
+                              clearTextInput();
+                              setState(() {
+                                plantNum = 15;
+                              });
+                            },
                             child: Text(
                               "15 ต้น",
-                              style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
@@ -89,19 +140,42 @@ class FarkPlookDialog extends StatelessWidget {
                           width: 114,
                           height: 40,
                           child: OutlinedButton(
-                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              primary:
+                                  plantNum == 20 ? Colors.white : Colors.black,
+                              backgroundColor: plantNum == 20
+                                  ? Color(0xff40A848)
+                                  : Colors.white,
+                            ),
+                            onPressed: () {
+                              clearTextInput();
+                              setState(() {
+                                plantNum = 20;
+                              });
+                            },
                             child: Text(
                               "20 ต้น",
-                              style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
                       ],
                     ),
                     Container(
-                        width: 260,
+                        width: 250,
                         height: 40,
                         child: TextField(
+                          controller: nameHolder,
+                          onChanged: (value) {
+                            print(value);
+                            setState(() {
+                              plantNum = int.parse(value);
+                            });
+                            print(plantNum);
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          ],
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(top: 10, left: 15),
                             border: OutlineInputBorder(),
@@ -121,17 +195,29 @@ class FarkPlookDialog extends StatelessWidget {
                   )),
               Expanded(
                 flex: 2,
-                child: Container(
-                  width: 240,
-                  height: 40,
-                  child: RaisedButton(
-                    onPressed: () {},
-                    color: Color(0xffDD582D),
-                    textColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Text('ปลูกตอนนี้', style: TextStyle(fontSize: 15)),
-                  ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 250,
+                      height: 40,
+                      child: RaisedButton(
+                        onPressed: () {
+                          print(plantNum);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PaymentPage()),
+                          );
+                        },
+                        color: Color(0xffDD582D),
+                        textColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child:
+                            Text('ปลูกตอนนี้', style: TextStyle(fontSize: 15)),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

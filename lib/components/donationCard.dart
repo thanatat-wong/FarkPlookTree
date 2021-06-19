@@ -104,7 +104,7 @@ class DonationCard extends StatelessWidget {
                             height: 25,
                             child: 
                             Text(
-                              data.treeAmount.toString(),
+                              data.treeAmount.toString()+" ต้น",
                               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                             )),
                       ),
