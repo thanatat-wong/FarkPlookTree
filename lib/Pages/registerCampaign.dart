@@ -11,18 +11,18 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-class joinCampaign extends StatefulWidget {
+class RegisterCampaign extends StatefulWidget {
   final AvailableCampaign data;
-  joinCampaign(this.data);
+  RegisterCampaign(this.data);
   @override
-  _joinCampaignState createState() => _joinCampaignState(data);
+  _RegisterCampaignState createState() => _RegisterCampaignState(data);
 }
 
-class _joinCampaignState extends State<joinCampaign> {
+class _RegisterCampaignState extends State<RegisterCampaign> {
   RegisterCampaignModel formRegister = RegisterCampaignModel();
 
   final AvailableCampaign data;
-  _joinCampaignState(this.data);
+  _RegisterCampaignState(this.data);
   @override
   void initState() {
     // TODO: implement initState
