@@ -38,13 +38,13 @@ class _SettingPageState extends State<SettingPage> {
             centerTitle: true,
             elevation: 0,
             title: Text(
-              "Setting",
+              "ตั้งค่า",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18),
+                  fontSize: 20.0),
             )),
         backgroundColor: Color(0XFF3EAF51),
         body: Column(
@@ -152,32 +152,32 @@ class _SettingPageState extends State<SettingPage> {
                             ],
                           )),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 20.0),
-                          width: MediaQuery.of(context).size.width,
-                          height: 60,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      width: 1, color: Colors.grey))),
-                          child: Row(
-                            children: [
-                              Icon(Icons.filter_frames),
-                              SizedBox(width: 10.0),
-                              Text(
-                                "นโยบายความเป็นส่วนตัว",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ],
-                          )),
-                    ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     Navigator.pop(context);
+                    //   },
+                    //   child: Container(
+                    //       padding: EdgeInsets.symmetric(
+                    //           vertical: 20.0, horizontal: 20.0),
+                    //       width: MediaQuery.of(context).size.width,
+                    //       height: 60,
+                    //       decoration: BoxDecoration(
+                    //           border: Border(
+                    //               bottom: BorderSide(
+                    //                   width: 1, color: Colors.grey))),
+                    //       child: Row(
+                    //         children: [
+                    //           Icon(Icons.filter_frames),
+                    //           SizedBox(width: 10.0),
+                    //           Text(
+                    //             "นโยบายความเป็นส่วนตัว",
+                    //             style: TextStyle(
+                    //               fontSize: 15,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       )),
+                    // ),
                     InkWell(
                       onTap: () async {
                         await _auth

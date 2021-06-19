@@ -43,6 +43,11 @@ class _donationPageState extends State<donationPage> {
       ],
       child: Scaffold(
         appBar: AppBar(
+          title: Text("ประวัติการบริจาค",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                  color: Colors.white)),
           iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Color(0xFF3EAF51),
           centerTitle: true,
@@ -51,18 +56,7 @@ class _donationPageState extends State<donationPage> {
         backgroundColor: Color(0XFF3EAF51),
         body: Column(
           children: [
-            Center(
-              child: Container(
-                child: Text(
-                  "ประวัติการบริจาค",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25.0,
-                      color: Colors.white),
-                ),
-              ),
-            ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 5.0),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: FutureBuilder<List<MyDonation>>(
@@ -71,7 +65,7 @@ class _donationPageState extends State<donationPage> {
                   if (snapshot.hasData) {
                     return Expanded(
                       child: SizedBox(
-                        height: 600,
+                        height: 680,
                         child: new ListView.builder(
                           scrollDirection: Axis.vertical,
                           reverse: false,

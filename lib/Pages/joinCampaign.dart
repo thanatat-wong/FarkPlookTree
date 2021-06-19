@@ -29,7 +29,7 @@ class _joinCampaignState extends State<joinCampaign> {
           title: Text("ร่วมแคมเปญ",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 25.0,
+                  fontSize: 20.0,
                   color: Colors.white)),
           iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Color(0xFF3EAF51),
@@ -151,27 +151,30 @@ class _joinCampaignState extends State<joinCampaign> {
                         ),
                       ),
                       SizedBox(height: 10.0),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: SizedBox(
-                          width: 350,
-                          height: 300,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(20,9, 0, 0),
-                                child: Container(
-                                  child: Text(
-                                    "รายละเอียด",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
+                      FittedBox(
+                        fit: BoxFit.fill,
+                                              child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: SizedBox(
+                            width: 350,
+                            height: 300,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(20,9, 0, 0),
+                                  child: Container(
+                                    child: Text(
+                                      "รายละเอียด",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
