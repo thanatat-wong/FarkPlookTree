@@ -191,8 +191,10 @@ class CampaignCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => joinCampaign()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => joinCampaign(data)));
                 },
               )),
         )

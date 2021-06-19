@@ -1,19 +1,80 @@
+import 'dart:convert';
+
+import 'package:farkplooktreeapp/models/availableCampaign.dart';
+import 'package:farkplooktreeapp/models/registerCampaign.dart';
+import 'package:farkplooktreeapp/models/registerCampaignResponse.dart';
 import 'package:flutter/material.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class joinCampaign extends StatefulWidget {
+  final AvailableCampaign data;
+  joinCampaign(this.data);
   @override
-  _joinCampaignState createState() => _joinCampaignState();
+  _joinCampaignState createState() => _joinCampaignState(data);
 }
 
 class _joinCampaignState extends State<joinCampaign> {
-  final AuthenticationService _auth =
-      AuthenticationService(FirebaseAuth.instance);
+  RegisterCampaignModel formRegister = RegisterCampaignModel();
+
+  final AvailableCampaign data;
+  _joinCampaignState(this.data);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.formRegister.uid = getUserID();
+    this.formRegister.campaign_no = data.campaign_no;
+  }
+
+  String getUserID() {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    String uid = user.uid;
+    return uid;
+  }
+
+  Future<RegisterCampaignResponse> registerCampaign(
+      String name,
+      String surname,
+      String contact_email,
+      String phone,
+      String uid,
+      String campaign_no) async {
+    final response = await http.post(
+      Uri.parse('http://52.163.100.154/api/fpt/joincampaign'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "name": name,
+        "surname": surname,
+        "contact_email": contact_email,
+        "phone": phone,
+        "uid": uid,
+        "campaign_no": campaign_no
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      return RegisterCampaignResponse.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to Register Campaign');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    String _path = 'http://52.163.100.154';
+    String successJoinCode;
     return MultiProvider(
       providers: [
         Provider<AuthenticationService>(
@@ -24,7 +85,7 @@ class _joinCampaignState extends State<joinCampaign> {
                 context.read<AuthenticationService>().currentUser),
       ],
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: Text("ร่วมแคมเปญ",
               style: TextStyle(
@@ -50,23 +111,27 @@ class _joinCampaignState extends State<joinCampaign> {
                             borderRadius: BorderRadius.circular(10)),
                         child: SizedBox(
                           width: 350,
-                          height: 160,
+                          height: 150,
                           child: Row(
                             children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(14, 10, 15, 10),
-                                child: Image.asset(
-                                    "assets/images_login_fresh_34_/image 23.png"),
+                              Align(
+                                alignment: AlignmentDirectional.topCenter,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 10, 0, 10),
+                                  child: Image.network(_path + data.thumbnail,
+                                      cacheHeight: 145, cacheWidth: 120),
+                                ),
                               ),
-                              Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        0, 15, 165, 0),
-                                    child: Container(
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 6.0),
+                                    Container(
                                       width: MediaQuery.of(context).size.width *
-                                          0.13,
+                                          0.17,
                                       height:
                                           MediaQuery.of(context).size.height *
                                               0.03,
@@ -76,31 +141,23 @@ class _joinCampaignState extends State<joinCampaign> {
                                               Radius.circular(3.0))),
                                       child: new Center(
                                         child: Text(
-                                          "Volunteer",
+                                          data.type,
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 10),
+                                              fontSize: 11),
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Container(
-                                    width: MediaQuery.of(context).size.height *
-                                        0.27,
-                                    child: Text(
-                                      "อาสาปลูกป่าเพื่ออนุรักษ์กวางลายดาว สวนสัตว์ขอนแก่น",
+                                    SizedBox(height: 5.0),
+                                    Text(
+                                      data.name,
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 16.0,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 0, 60, 0),
-                                    child: Row(
+                                    SizedBox(height: 6.0),
+                                    Row(
                                       children: [
                                         Icon(
                                           Icons.calendar_today,
@@ -108,44 +165,65 @@ class _joinCampaignState extends State<joinCampaign> {
                                         ),
                                         SizedBox(width: 5.0),
                                         Text(
-                                          "23 กรกฎาคม 2564 7:00 - 15:00 น.",
-                                          style: TextStyle(fontSize: 10),
+                                          (data.from_datetime.day.toString() ==
+                                                  data.to_datetime.day
+                                                      .toString())
+                                              ? DateFormat('dd MMMM yyyy')
+                                                      .format(
+                                                          data.from_datetime) +
+                                                  " " +
+                                                  DateFormat('kk:mm').format(
+                                                      data.from_datetime) +
+                                                  "-" +
+                                                  DateFormat('kk:mm')
+                                                      .format(data.to_datetime)
+                                              : (data.from_datetime.month.toString() ==
+                                                      data.to_datetime.month
+                                                          .toString())
+                                                  ? DateFormat('dd').format(
+                                                          data.from_datetime) +
+                                                      "-" +
+                                                      DateFormat('dd MMMM yyyy')
+                                                          .format(
+                                                              data.to_datetime)
+                                                  : DateFormat('dd MMMM yyyy kk:mm').format(
+                                                          data.from_datetime) +
+                                                      " -" +
+                                                      "\n" +
+                                                      DateFormat('dd MMMM yyyy kk:mm')
+                                                          .format(data.to_datetime),
+                                          style: TextStyle(fontSize: 13),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                  SizedBox(height: 6.0),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 0, 132, 0),
-                                    child: Row(
+                                    SizedBox(height: 6.0),
+                                    Row(
                                       children: [
                                         Icon(Icons.location_on, size: 15),
                                         SizedBox(width: 5.0),
                                         Text(
-                                          "สวนสัตว์ขอนแก่น",
-                                          style: TextStyle(fontSize: 10),
+                                          data.location,
+                                          style: TextStyle(fontSize: 13),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                  SizedBox(height: 6.0),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 0, 150, 0),
-                                    child: Row(
+                                    SizedBox(height: 6.0),
+                                    Row(
                                       children: [
                                         Icon(Icons.people, size: 15),
                                         SizedBox(width: 5.0),
                                         Text(
-                                          "29 ผู้เข้าร่วม",
-                                          style: TextStyle(fontSize: 10),
+                                          data.attendee +
+                                              "/" +
+                                              data.limitation +
+                                              " ผู้เข้าร่วม",
+                                          style: TextStyle(fontSize: 13),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -156,12 +234,11 @@ class _joinCampaignState extends State<joinCampaign> {
                             borderRadius: BorderRadius.circular(10)),
                         child: SizedBox(
                           width: 350,
-                          height: 300,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(20,9, 0, 0),
+                                padding: const EdgeInsets.fromLTRB(20, 9, 0, 0),
                                 child: Container(
                                   child: Text(
                                     "รายละเอียด",
@@ -171,6 +248,18 @@ class _joinCampaignState extends State<joinCampaign> {
                                   ),
                                 ),
                               ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(20, 9, 0, 0),
+                                child: Text(
+                                  data.description,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              )
                             ],
                           ),
                         ),
@@ -223,6 +312,9 @@ class _joinCampaignState extends State<joinCampaign> {
                                                   .height *
                                               0.05,
                                           child: TextFormField(
+                                            onChanged: (value) {
+                                              this.formRegister.name = value;
+                                            },
                                             // autofocus: true,
                                             keyboardType: TextInputType.text,
                                             validator: (value) {
@@ -256,6 +348,10 @@ class _joinCampaignState extends State<joinCampaign> {
                                                     .height *
                                                 0.05,
                                             child: TextFormField(
+                                              onChanged: (value) {
+                                                this.formRegister.surname =
+                                                    value;
+                                              },
                                               keyboardType: TextInputType.text,
                                               decoration: InputDecoration(
                                                   border: OutlineInputBorder(),
@@ -279,12 +375,16 @@ class _joinCampaignState extends State<joinCampaign> {
                                             MediaQuery.of(context).size.height *
                                                 0.05,
                                         child: TextFormField(
+                                          onChanged: (value) {
+                                            this.formRegister.contact_email =
+                                                value;
+                                          },
                                           validator: (value) {
                                             if (value.isEmpty) {
-                                              return "กรุณากรอกชื่อ";
+                                              return "กรุณากรอกอีเมลล์ที่ใช้ติดต่อ";
                                             }
-                                            if (value.length < 2) {
-                                              return "กรุณากรอกตัวอักษรมากกว่า 1 ตัวอักษร";
+                                            if (!value.contains('@')) {
+                                              return "กรุณากรอกอีเมลล์ให้ถูกต้อง";
                                             }
                                           },
                                           keyboardType:
@@ -309,6 +409,9 @@ class _joinCampaignState extends State<joinCampaign> {
                                             MediaQuery.of(context).size.height *
                                                 0.05,
                                         child: TextFormField(
+                                          onChanged: (value) {
+                                            this.formRegister.phone = value;
+                                          },
                                           keyboardType: TextInputType.phone,
                                           decoration: InputDecoration(
                                               border: OutlineInputBorder(),
@@ -340,7 +443,22 @@ class _joinCampaignState extends State<joinCampaign> {
                   color: Color(0xFFDD582D),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
-                  onPressed: () {},
+                  onPressed: () {
+                    print(data.campaign_no);
+                    registerCampaign(
+                            this.formRegister.name,
+                            this.formRegister.surname,
+                            this.formRegister.contact_email,
+                            this.formRegister.phone,
+                            this.formRegister.uid,
+                            this.formRegister.campaign_no)
+                        .then((value) {
+                      print(value.join_code);
+                      setState(() {
+                        successJoinCode = value.join_code;
+                      });
+                    });
+                  },
                 ),
               ),
               SizedBox(height: 20.0),
