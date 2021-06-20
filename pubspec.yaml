@@ -39,6 +39,7 @@ dependencies:
   http: ^0.12.2
   intl: ^0.16.1
   flutter_credit_card: ^2.0.0
+  credit_card_validate: ^0.0.3
 
 dev_dependencies:
   flutter_test:
