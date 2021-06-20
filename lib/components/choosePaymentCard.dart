@@ -1,6 +1,9 @@
+import 'package:farkplooktreeapp/models/paymentcard.dart';
 import 'package:flutter/material.dart';
 
 class ChoosePaymentCard extends StatelessWidget {
+  final PaymentCard data;
+  ChoosePaymentCard({@required this.data});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,18 +28,19 @@ class ChoosePaymentCard extends StatelessWidget {
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "THANATAT WONGABUT",
+                      data.cardHolder,
                       style: TextStyle(fontSize: 12, color: Color(0xffA3A3A3)),
                     ),
                     Row(
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 30),
-                          child: Text("XXXX XXXX XXXX 1234",
+                          child: Text(
+                              "XXXX XXXX XXXX ${data.cardno.substring(data.cardno.length - 4, data.cardno.length)} ",
                               style: TextStyle(
                                   fontSize: 12, color: Color(0xffA3A3A3))),
                         ),
-                        Text("10/28",
+                        Text("${data.expireMonth}/${data.expireYear}",
                             style: TextStyle(
                                 fontSize: 12, color: Color(0xffA3A3A3)))
                       ],

@@ -1,13 +1,13 @@
 import 'package:farkplooktreeapp/Pages/Setting.dart';
 import 'package:farkplooktreeapp/Pages/campaignHistory.dart';
 import 'package:farkplooktreeapp/Pages/donationPage.dart';
-import 'package:farkplooktreeapp/Pages/homePage.dart';
 import 'package:farkplooktreeapp/Pages/qrCodeForJoinCampaign.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'Pages/homePage.dart';
 import 'login_fresh.dart';
 
 Future<void> main() async {
@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
 class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User>();
+    final User firebaseUser = context.watch<User>();
     if (firebaseUser != null) {
       return Home();
     }

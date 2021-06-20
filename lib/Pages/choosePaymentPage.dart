@@ -1,13 +1,27 @@
 import 'package:farkplooktreeapp/Pages/addCardPage.dart';
 import 'package:farkplooktreeapp/components/choosePaymentCard.dart';
+import 'package:farkplooktreeapp/models/paymentcard.dart';
 import 'package:flutter/material.dart';
 
 class ChoosePaymentPage extends StatefulWidget {
+  final List<PaymentCard> cardList;
+  ChoosePaymentPage({this.cardList});
   @override
-  _ChoosePaymentPageState createState() => _ChoosePaymentPageState();
+  _ChoosePaymentPageState createState() =>
+      _ChoosePaymentPageState(cardList: cardList);
 }
 
 class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
+  Future<List<PaymentCard>> myCardList;
+  final List<PaymentCard> cardList;
+  _ChoosePaymentPageState({this.cardList});
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,10 +52,23 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            ChoosePaymentCard(),
-            ChoosePaymentCard(),
-            ChoosePaymentCard(),
-            ChoosePaymentCard(),
+            Expanded(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: new ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  reverse: false,
+                  itemCount: cardList.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      GestureDetector(
+                          onTap: () => {
+                                Navigator.pop(context, index),
+                              },
+                          child: ChoosePaymentCard(
+                              data: cardList.elementAt(index))),
+                ),
+              ),
+            ),
             TextButton(
                 onPressed: () {
                   Navigator.push(

@@ -1,5 +1,6 @@
 import 'package:farkplooktreeapp/components/farkPlookDialog.dart';
 import 'package:farkplooktreeapp/models/donateHistory.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:farkplooktreeapp/components/farkPlookCard.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
@@ -14,6 +15,7 @@ class FarkPlook extends StatefulWidget {
 class _FarkPlookState extends State<FarkPlook> {
   Future<List<Donation>> lastedDonationList;
   Future<List<Donation>> topDonationList;
+  String uid;
   int selectedindex = 0;
 
   @override
@@ -21,12 +23,22 @@ class _FarkPlookState extends State<FarkPlook> {
     super.initState();
     lastedDonationList = fetchLastedDonation();
     topDonationList = fetchTopDonation();
+    this.uid = getUserID();
+  }
+
+  String getUserID() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User user = auth.currentUser;
+    final uid = user.uid;
+    return uid.toString();
   }
 
   @override
   Widget build(BuildContext context) {
     Widget _buildPopupDialog(BuildContext context) {
-      return FarkPlookDialog();
+      return FarkPlookDialog(
+        uid: uid,
+      );
     }
 
     return Expanded(

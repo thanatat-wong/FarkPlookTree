@@ -1,19 +1,26 @@
 import 'package:farkplooktreeapp/Pages/paymentPage.dart';
+import 'package:farkplooktreeapp/models/farkplookFormModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class FarkPlookDialog extends StatefulWidget {
+  final String uid;
+  FarkPlookDialog({
+    @required this.uid,
+  });
   @override
-  State<FarkPlookDialog> createState() => _FarkPlookDialogState();
+  State<FarkPlookDialog> createState() => _FarkPlookDialogState(uid: uid);
 }
 
 class _FarkPlookDialogState extends State<FarkPlookDialog> {
-  int plantNum;
+  FarkPlookFormModel form = new FarkPlookFormModel();
+  final String uid;
+  _FarkPlookDialogState({@required this.uid});
   int page = 0;
   @override
   void initState() {
     super.initState();
-    plantNum = 5;
+    this.form.plantNum = 5;
   }
 
   clearTextInput() {
@@ -72,17 +79,17 @@ class _FarkPlookDialogState extends State<FarkPlookDialog> {
                                 height: 40,
                                 child: OutlinedButton(
                                   style: OutlinedButton.styleFrom(
-                                    primary: plantNum == 5
+                                    primary: this.form.plantNum == 5
                                         ? Colors.white
                                         : Colors.black,
-                                    backgroundColor: plantNum == 5
+                                    backgroundColor: this.form.plantNum == 5
                                         ? Color(0xff40A848)
                                         : Colors.white,
                                   ),
                                   onPressed: () {
                                     clearTextInput();
                                     setState(() {
-                                      plantNum = 5;
+                                      this.form.plantNum = 5;
                                     });
                                   },
                                   child: Text(
@@ -95,17 +102,17 @@ class _FarkPlookDialogState extends State<FarkPlookDialog> {
                                 height: 40,
                                 child: OutlinedButton(
                                   style: OutlinedButton.styleFrom(
-                                    primary: plantNum == 10
+                                    primary: this.form.plantNum == 10
                                         ? Colors.white
                                         : Colors.black,
-                                    backgroundColor: plantNum == 10
+                                    backgroundColor: this.form.plantNum == 10
                                         ? Color(0xff40A848)
                                         : Colors.white,
                                   ),
                                   onPressed: () {
                                     clearTextInput();
                                     setState(() {
-                                      plantNum = 10;
+                                      this.form.plantNum = 10;
                                     });
                                   },
                                   child: Text(
@@ -123,17 +130,17 @@ class _FarkPlookDialogState extends State<FarkPlookDialog> {
                                 height: 40,
                                 child: OutlinedButton(
                                   style: OutlinedButton.styleFrom(
-                                    primary: plantNum == 15
+                                    primary: this.form.plantNum == 15
                                         ? Colors.white
                                         : Colors.black,
-                                    backgroundColor: plantNum == 15
+                                    backgroundColor: this.form.plantNum == 15
                                         ? Color(0xff40A848)
                                         : Colors.white,
                                   ),
                                   onPressed: () {
                                     clearTextInput();
                                     setState(() {
-                                      plantNum = 15;
+                                      this.form.plantNum = 15;
                                     });
                                   },
                                   child: Text(
@@ -146,17 +153,17 @@ class _FarkPlookDialogState extends State<FarkPlookDialog> {
                                 height: 40,
                                 child: OutlinedButton(
                                   style: OutlinedButton.styleFrom(
-                                    primary: plantNum == 20
+                                    primary: this.form.plantNum == 20
                                         ? Colors.white
                                         : Colors.black,
-                                    backgroundColor: plantNum == 20
+                                    backgroundColor: this.form.plantNum == 20
                                         ? Color(0xff40A848)
                                         : Colors.white,
                                   ),
                                   onPressed: () {
                                     clearTextInput();
                                     setState(() {
-                                      plantNum = 20;
+                                      this.form.plantNum = 20;
                                     });
                                   },
                                   child: Text(
@@ -172,14 +179,14 @@ class _FarkPlookDialogState extends State<FarkPlookDialog> {
                               child: TextField(
                                 controller: nameHolder,
                                 onTap: () {
-                                  plantNum = 0;
+                                  this.form.plantNum = 0;
                                 },
                                 onChanged: (value) {
                                   print(value);
                                   setState(() {
-                                    plantNum = int.parse(value);
+                                    this.form.plantNum = int.parse(value);
                                   });
-                                  print(plantNum);
+                                  print(this.form.plantNum);
                                 },
                                 keyboardType: TextInputType.number,
                                 inputFormatters: <TextInputFormatter>[
@@ -213,7 +220,7 @@ class _FarkPlookDialogState extends State<FarkPlookDialog> {
                             height: 40,
                             child: RaisedButton(
                               onPressed: () {
-                                print(plantNum);
+                                print(this.form.plantNum);
                                 setState(() {
                                   page++;
                                 });
@@ -263,7 +270,11 @@ class _FarkPlookDialogState extends State<FarkPlookDialog> {
                         width: 250,
                         height: 40,
                         child: TextField(
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            setState(() {
+                              this.form.displayName = value;
+                            });
+                          },
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(top: 10, left: 15),
                             border: OutlineInputBorder(),
@@ -288,7 +299,11 @@ class _FarkPlookDialogState extends State<FarkPlookDialog> {
                         child: TextField(
                           minLines: 5,
                           maxLines: 5,
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            setState(() {
+                              this.form.message = value;
+                            });
+                          },
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(top: 10, left: 15),
                             border: OutlineInputBorder(),
@@ -312,11 +327,11 @@ class _FarkPlookDialogState extends State<FarkPlookDialog> {
                             height: 40,
                             child: RaisedButton(
                               onPressed: () {
-                                print(plantNum);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PaymentPage()),
+                                      builder: (context) =>
+                                          PaymentPage(form: form, uid: uid)),
                                 );
                               },
                               color: Color(0xffDD582D),
