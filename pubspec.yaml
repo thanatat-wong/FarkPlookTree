@@ -38,6 +38,7 @@ dependencies:
   flutter_toggle_tab: ^1.1.4
   http: ^0.12.2
   intl: ^0.16.1
+  flutter_credit_card: ^2.0.0
 
 dev_dependencies:
   flutter_test:

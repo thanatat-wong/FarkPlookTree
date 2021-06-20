@@ -1,3 +1,4 @@
+import 'package:farkplooktreeapp/Pages/choosePaymentPage.dart';
 import 'package:flutter/material.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -71,7 +72,14 @@ class _PaymentPageState extends State<PaymentPage> {
                             style: TextStyle(color: Color(0xffA0A0A0)),
                           ),
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ChoosePaymentPage()),
+                                );
+                              },
                               child: Text('เลือกวิธีการชำระเงิน'))
                         ],
                       )),
