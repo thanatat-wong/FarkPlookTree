@@ -35,7 +35,6 @@ class _FarkPlookState extends State<FarkPlook> {
         padding: EdgeInsets.only(
             top: MediaQuery.of(context).size.height * 0.02,
             bottom: MediaQuery.of(context).size.height * 0.04),
-        color: Color(0xffF3FFF5),
         child: Column(
           children: [
             Expanded(
@@ -87,7 +86,8 @@ class _FarkPlookState extends State<FarkPlook> {
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 return SizedBox(
-                                  height: 600,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.49,
                                   width: 400,
                                   child: new ListView.builder(
                                     scrollDirection: Axis.vertical,
@@ -112,26 +112,34 @@ class _FarkPlookState extends State<FarkPlook> {
                   )
                 : Expanded(
                     flex: 8,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: FutureBuilder<List<Donation>>(
-                        future: topDonationList,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              reverse: false,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (BuildContext context, int index) =>
-                                  FarkPlookCard(snapshot.data[index]),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Text("${snapshot.error}");
-                          }
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          FutureBuilder<List<Donation>>(
+                            future: topDonationList,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return SizedBox(
+                                  height: 600,
+                                  width: 400,
+                                  child: new ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    reverse: false,
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) =>
+                                            FarkPlookCard(snapshot.data[index]),
+                                  ),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text("${snapshot.error}");
+                              }
 
-                          // By default, show a loading spinner.
-                          return CircularProgressIndicator();
-                        },
+                              // By default, show a loading spinner.
+                              return CircularProgressIndicator();
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ),

@@ -15,20 +15,21 @@ class AvailableCampaign {
   final String thumbnail;
   final String type;
   final String attendee;
+  final bool isRegistered;
 
-  AvailableCampaign({
-    this.campaign_no,
-    this.name,
-    this.description,
-    this.limitation,
-    this.from_datetime,
-    this.to_datetime,
-    this.location,
-    this.isenable,
-    this.thumbnail,
-    this.type,
-    this.attendee,
-  });
+  AvailableCampaign(
+      {this.campaign_no,
+      this.name,
+      this.description,
+      this.limitation,
+      this.from_datetime,
+      this.to_datetime,
+      this.location,
+      this.isenable,
+      this.thumbnail,
+      this.type,
+      this.attendee,
+      this.isRegistered});
 
   factory AvailableCampaign.fromJson(Map<String, dynamic> json) {
     return AvailableCampaign(
@@ -43,13 +44,14 @@ class AvailableCampaign {
       thumbnail: json['thumbnail'],
       type: json['type'],
       attendee: json['attendee'].toString(),
+      isRegistered: (json['isRegistered'].toString() == "1") ? true : false,
     );
   }
 }
 
-Future<List<AvailableCampaign>> fetchAvailableCampaign() async {
+Future<List<AvailableCampaign>> fetchAvailableCampaign(String id) async {
   final response = await http
-      .get(Uri.parse('http://52.163.100.154/api/fpt/availableCampaign'));
+      .get(Uri.parse('http://52.163.100.154/api/fpt/availableCampaign/$id'));
 
   if (response.statusCode == 200) {
     List<AvailableCampaign> dataList = [];

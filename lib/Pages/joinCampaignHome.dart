@@ -1,19 +1,23 @@
-import 'package:farkplooktreeapp/Pages/joinCampaign.dart';
+import 'package:farkplooktreeapp/Pages/registerCampaign.dart';
 import 'package:farkplooktreeapp/models/availableCampaign.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class JoinCampaign extends StatefulWidget {
+  final String uid;
+  JoinCampaign(this.uid);
   @override
-  _JoinCampaignState createState() => _JoinCampaignState();
+  _JoinCampaignState createState() => _JoinCampaignState(uid: uid);
 }
 
 class _JoinCampaignState extends State<JoinCampaign> {
+  final String uid;
+  _JoinCampaignState({@required this.uid});
   Future<List<AvailableCampaign>> availableCampaignList;
   @override
   void initState() {
     super.initState();
-    availableCampaignList = fetchAvailableCampaign();
+    availableCampaignList = fetchAvailableCampaign(uid);
   }
 
   @override
@@ -179,22 +183,38 @@ class CampaignCard extends StatelessWidget {
                   MediaQuery.of(context).size.width * 0.35,
                   MediaQuery.of(context).size.width * 0.040,
                   0),
-              child: FlatButton(
-                child: Text(
-                  "สมัครเข้าร่วม",
-                  style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-                color: Color(0xFF3EAF51),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => joinCampaign()));
-                },
-              )),
+              child: (data.isRegistered)
+                  ? FlatButton(
+                      child: Text(
+                        "ลงทะเบียนแล้ว",
+                        style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      color: Color(0xFFB0B0B0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      onPressed: () {},
+                    )
+                  : FlatButton(
+                      child: Text(
+                        "ลงทะเบียน",
+                        style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      color: Color(0xFF3EAF51),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterCampaign(data)));
+                      },
+                    )),
         )
       ],
     );
