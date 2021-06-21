@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class FarkPlookDialog extends StatefulWidget {
-  
   final String uid;
   FarkPlookDialog({
     @required this.uid,
@@ -222,9 +221,13 @@ class _FarkPlookDialogState extends State<FarkPlookDialog> {
                             child: RaisedButton(
                               onPressed: () {
                                 print(this.form.plantNum);
-                                setState(() {
-                                  page++;
-                                });
+                                this.form.plantNum > 0
+                                    ? setState(() {
+                                        page++;
+                                        this.form.displayName = null;
+                                        this.form.message = null;
+                                      })
+                                    : print('plat more than 1');
                                 initState();
                               },
                               color: Color(0xffDD582D),
@@ -328,12 +331,18 @@ class _FarkPlookDialogState extends State<FarkPlookDialog> {
                             height: 40,
                             child: RaisedButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          PaymentPage(form: form, uid: uid)),
-                                );
+                                print(form.displayName);
+                                this.form.displayName == null ||
+                                        this.form.displayName == "" ||
+                                        this.form.message == null ||
+                                        this.form.message == ""
+                                    ? print('pls print display name')
+                                    : Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => PaymentPage(
+                                                form: form, uid: uid)),
+                                      );
                               },
                               color: Color(0xffDD582D),
                               textColor: Colors.white,

@@ -81,10 +81,6 @@ class _FarkPlookState extends State<FarkPlook> {
                         },
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(bottom: 10, left: 300),
-                      child: Image.asset('images/searchFarkPlook.png'),
-                    )
                   ],
                 )),
             (selectedindex == 0)
