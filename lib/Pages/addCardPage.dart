@@ -1,13 +1,21 @@
+import 'dart:convert';
+
+import 'package:farkplooktreeapp/models/paymentcard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:credit_card_validate/credit_card_validate.dart';
+import 'package:http/http.dart' as http;
 
 class AddCardPage extends StatefulWidget {
+  final String uid;
+  AddCardPage({this.uid});
   @override
-  State<AddCardPage> createState() => _AddCardPageState();
+  State<AddCardPage> createState() => _AddCardPageState(uid: uid);
 }
 
 class _AddCardPageState extends State<AddCardPage> {
+  final String uid;
+  _AddCardPageState({this.uid});
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
@@ -15,6 +23,43 @@ class _AddCardPageState extends State<AddCardPage> {
   bool isCvvFocused = false;
   String cardType = '';
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  Future<void> addMyCard(String card_no, String expire_month,
+      String expire_year, String cardholder, String uid, String cvv) async {
+    print(card_no);
+    final response = await http.post(
+      Uri.parse('http://52.163.100.154/api/fpt/addpaymentcard'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "card_no": card_no,
+        "expire_month": expire_month,
+        "expire_year": expire_year,
+        "cardholder": cardholder,
+        "uid": uid,
+        "cvv": cvv
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      return Navigator.pop(
+          context,
+          new PaymentCard(
+              cardno: card_no,
+              expireMonth: expiryDate.substring(0, 2),
+              expireYear: expiryDate.substring(3, 5),
+              cvv: cvvCode,
+              cardHolder: cardHolderName));
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to Register Campaign');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,6 +150,14 @@ class _AddCardPageState extends State<AddCardPage> {
                                       print(
                                           CreditCardValidator.identifyCardBrand(
                                               cardNumber));
+                                      addMyCard(
+                                        cardNumber.replaceAll(' ', ''),
+                                        expiryDate.substring(0, 2),
+                                        expiryDate.substring(3, 5),
+                                        cardHolderName,
+                                        uid,
+                                        cvvCode,
+                                      );
                                     } else {
                                       print('invalid!');
                                       print(

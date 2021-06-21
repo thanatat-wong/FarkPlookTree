@@ -36,6 +36,8 @@ class _MyAppState extends State<MyApp> {
                 context.read<AuthenticationService>().currentUser),
       ],
       child: MaterialApp(
+        initialRoute: '/',
+        routes: {},
         title: 'FarkPlookTree',
         theme: ThemeData(
           fontFamily: 'Kanit',

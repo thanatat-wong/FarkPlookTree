@@ -161,11 +161,14 @@ class _FarkPlookState extends State<FarkPlook> {
                   padding: EdgeInsets.only(top: 10),
                   alignment: Alignment.center,
                   child: RaisedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) =>
-                              _buildPopupDialog(context));
+                              _buildPopupDialog(context)).then((value) {
+                        initState();
+                        setState(() {});
+                      });
                     },
                     color: Color(0xffDD582D),
                     textColor: Colors.white,

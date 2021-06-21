@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:farkplooktreeapp/Pages/choosePaymentPage.dart';
 import 'package:farkplooktreeapp/models/farkplookFormModel.dart';
 import 'package:farkplooktreeapp/models/paymentcard.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -29,6 +31,34 @@ class _PaymentPageState extends State<PaymentPage> {
       result += chars[rnd.nextInt(chars.length)];
     }
     return result;
+  }
+
+  Future<void> completeDonatePayment() async {
+    final response = await http.post(
+      Uri.parse('http://52.163.100.154/api/fpt/donate'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "uid": uid,
+        "tree_amount": form.plantNum.toString(),
+        "message": form.message,
+        "displayname": form.displayName,
+        "donate_amount": form.donateAmount.toString(),
+        "card_no": form.card.cardno,
+        "refno": form.refno
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      return Navigator.of(context).popUntil((route) => route.isFirst);
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to Register Campaign');
+    }
   }
 
   @override
@@ -63,6 +93,7 @@ class _PaymentPageState extends State<PaymentPage> {
               if (snapshot.hasData) {
                 selectedCard =
                     snapshot.data.elementAt(snapshot.data.length - 1);
+                form.card = selectedCard;
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -114,7 +145,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                   TextButton(
                                       onPressed: () {
                                         _awaitReturnValueFromChoosePaymentMethodScreen(
-                                            context, snapshot.data);
+                                            context, snapshot.data, uid);
                                       },
                                       child: Text('เลือกวิธีการชำระเงิน'))
                                 ],
@@ -207,8 +238,11 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                     TextButton(
                         onPressed: () {
+                          print('Heyt1');
                           print(selectedCard.cardno);
+                          print('Heyt2');
                           print(form.card.cardno);
+                          completeDonatePayment();
                         },
                         style: TextButton.styleFrom(
                             minimumSize: Size(
@@ -236,28 +270,26 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   void _awaitReturnValueFromChoosePaymentMethodScreen(
-      BuildContext context, List<PaymentCard> cardListnaja) async {
+      BuildContext context, List<PaymentCard> cardListnaja, String uid) async {
     // start the SecondScreen and wait for it to finish with a result
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ChoosePaymentPage(cardList: cardListnaja)),
+          builder: (context) => ChoosePaymentPage(
+                uid: uid,
+              )),
     );
 
     // after the SecondScreen result comes back update the Text widget with it
     if (result != null) {
-      print('Heyy');
       print(result);
       setState(() {
-        this.selectedCard.cardno = cardListnaja.elementAt(result).cardno;
-        this.selectedCard.cardHolder =
-            cardListnaja.elementAt(result).cardHolder;
-        this.selectedCard.cvv = cardListnaja.elementAt(result).cvv;
-        this.selectedCard.expireMonth =
-            cardListnaja.elementAt(result).expireMonth;
-        this.selectedCard.expireYear =
-            cardListnaja.elementAt(result).expireYear;
-        form.card = cardListnaja.elementAt(result);
+        this.selectedCard.cardno = result.cardno;
+        this.selectedCard.cardHolder = result.cardHolder;
+        this.selectedCard.cvv = result.cvv;
+        this.selectedCard.expireMonth = result.expireMonth;
+        this.selectedCard.expireYear = result.expireYear;
+        form.card = result;
       });
       print(selectedCard.cardno);
     }

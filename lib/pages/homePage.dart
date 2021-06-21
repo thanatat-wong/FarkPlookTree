@@ -13,6 +13,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  
   final PanelController _pc = PanelController();
   int currentTab = 0;
   final List<Widget> screens = [FarkPlook()];

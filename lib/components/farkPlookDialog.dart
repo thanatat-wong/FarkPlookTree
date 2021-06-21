@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class FarkPlookDialog extends StatefulWidget {
+  
   final String uid;
   FarkPlookDialog({
     @required this.uid,
