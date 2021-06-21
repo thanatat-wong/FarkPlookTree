@@ -1,10 +1,8 @@
 import 'package:farkplooktreeapp/components/donationCard.dart';
-import 'package:farkplooktreeapp/components/farkPlookCard.dart';
 import 'package:farkplooktreeapp/models/myDonateHistory.dart';
 import 'package:flutter/material.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class donationPage extends StatefulWidget {

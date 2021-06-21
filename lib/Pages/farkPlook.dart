@@ -4,8 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:farkplooktreeapp/components/farkPlookCard.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class FarkPlook extends StatefulWidget {
   @override

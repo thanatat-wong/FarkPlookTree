@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:farkplooktreeapp/Pages/qrCodeForJoinCampaign.dart';
 import 'package:farkplooktreeapp/models/availableCampaign.dart';
 import 'package:farkplooktreeapp/models/registerCampaign.dart';
 import 'package:farkplooktreeapp/models/registerCampaignResponse.dart';
 import 'package:flutter/material.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -457,6 +457,10 @@ class _RegisterCampaignState extends State<RegisterCampaign> {
                       setState(() {
                         successJoinCode = value.join_code;
                       });
+                      Navigator.push(context, MaterialPageRoute<void>(
+                          builder: (BuildContext context) {
+                        return qrCodeForJoinCampaign(data,value.join_code);
+                          }));
                     });
                   },
                 ),

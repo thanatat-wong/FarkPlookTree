@@ -7,8 +7,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+<<<<<<< HEAD
 import 'package:http/http.dart' as http;
 
+=======
+>>>>>>> 79f2fa956c7d56a1c891875687ea743959752953
 import 'joinCampaignHome.dart';
 
 class Home extends StatefulWidget {

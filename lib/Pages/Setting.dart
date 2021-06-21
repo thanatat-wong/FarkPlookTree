@@ -1,8 +1,6 @@
 import 'package:farkplooktreeapp/Pages/campaignHistory.dart';
 import 'package:farkplooktreeapp/Pages/donationPage.dart';
 import 'package:farkplooktreeapp/auth/authentication_service.dart';
-import 'package:farkplooktreeapp/login_fresh.dart';
-import 'package:farkplooktreeapp/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -2,10 +2,7 @@ import 'dart:convert';
 
 import 'package:farkplooktreeapp/models/myJoinedCampaign.dart';
 import 'package:flutter/material.dart';
-import 'package:farkplooktreeapp/auth/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
