@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:farkplooktreeapp/Pages/Setting.dart';
+import 'package:farkplooktreeapp/models/homeData.dart';
 import 'package:farkplooktreeapp/pages/farkPlook.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:http/http.dart' as http;
 
 import 'joinCampaignHome.dart';
 
@@ -13,7 +17,33 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  
+  Future<HomeData> kuydj;
+  Future<HomeData> fetchHomeData() async {
+    final response =
+        await http.get(Uri.parse('http://52.163.100.154/api/fpt/homedata'));
+
+    if (response.statusCode == 200) {
+      HomeData data;
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      data = (HomeData.fromJson(jsonDecode(response.body)[0]));
+
+      print('------------LASTED DONATION------------');
+      print(response.body);
+      return data;
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
+  }
+
+  @override
+  void initState() {
+    kuydj = fetchHomeData();
+    super.initState();
+  }
+
   final PanelController _pc = PanelController();
   int currentTab = 0;
   final List<Widget> screens = [FarkPlook()];
@@ -62,11 +92,13 @@ class _HomeState extends State<Home> {
           panelSnapping: true,
           onPanelOpened: () {
             setState(() {
+              kuydj = fetchHomeData();
               openpanel = true;
             });
           },
           onPanelClosed: () {
             setState(() {
+              kuydj = fetchHomeData();
               openpanel = false;
             });
           },
@@ -164,60 +196,22 @@ class _HomeState extends State<Home> {
                     _pc.close();
                     openpanel = false;
                   },
-                  child: Container(
-                    child: Stack(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 60),
-                          alignment: Alignment.topCenter,
-                          child: Image.asset('images/world2.png'),
-                        ),
-                        Container(
-                          alignment: Alignment.topCenter,
-                          margin: EdgeInsets.only(top: 100),
-                          child: Column(
-                            children: [
-                              Text(
-                                'เราปลูกไปแล้ว',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30.0),
-                              ),
-                              Text(
-                                '20,000,000 ต้น',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 50.0),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              : Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Stack(
-                        children: <Widget>[
-                          Container(
-                            alignment: Alignment.center,
-                            child: Image.asset('images/world.png'),
-                          ),
-                          Container(
-                              alignment: Alignment.center,
-                              child: Swiper.children(
-                                autoplay: false,
-                                control: SwiperControl(
-                                    color: Colors.white,
-                                    padding: EdgeInsets.all(30)),
-                                children: <Widget>[
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: FutureBuilder<HomeData>(
+                      future: kuydj,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Container(
+                            child: Stack(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(top: 60),
+                                  alignment: Alignment.topCenter,
+                                  child: Image.asset('images/world2.png'),
+                                ),
+                                Container(
+                                  alignment: Alignment.topCenter,
+                                  margin: EdgeInsets.only(top: 100),
+                                  child: Column(
                                     children: [
                                       Text(
                                         'เราปลูกไปแล้ว',
@@ -227,7 +221,7 @@ class _HomeState extends State<Home> {
                                             fontSize: 30.0),
                                       ),
                                       Text(
-                                        '20,000,000 ต้น',
+                                        '${snapshot.data.sumTreeAmount} ต้น',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
@@ -235,51 +229,112 @@ class _HomeState extends State<Home> {
                                       ),
                                     ],
                                   ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'มีผู้ร่วมปลูกแล้ว',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 30.0),
-                                      ),
-                                      Text(
-                                        '600,000 คน',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 50.0),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'จัดแคมเปญแล้ว',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 30.0),
-                                      ),
-                                      Text(
-                                        '10 ครั้ง',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 50.0),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              )),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text("${snapshot.error}");
+                        }
+                        // By default, show a loading spinner.
+                        return CircularProgressIndicator();
+                      }),
+                )
+              : FutureBuilder<HomeData>(
+                  future: kuydj,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  alignment: Alignment.center,
+                                  child: Image.asset('images/world.png'),
+                                ),
+                                Container(
+                                    alignment: Alignment.center,
+                                    child: Swiper.children(
+                                      autoplay: false,
+                                      control: SwiperControl(
+                                          color: Colors.white,
+                                          padding: EdgeInsets.all(30)),
+                                      children: <Widget>[
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'เราปลูกไปแล้ว',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 30.0),
+                                            ),
+                                            Text(
+                                              '${snapshot.data.sumTreeAmount} ต้น',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 50.0),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'มีผู้ร่วมปลูกแล้ว',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 30.0),
+                                            ),
+                                            Text(
+                                              '${snapshot.data.countDonator} คน',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 50.0),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'จัดแคมเปญแล้ว',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 30.0),
+                                            ),
+                                            Text(
+                                              '${snapshot.data.countCampaign} ครั้ง',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 50.0),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    )),
+                              ],
+                            ),
+                          )
                         ],
-                      ),
-                    )
-                  ],
-                ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+                    // By default, show a loading spinner.
+                    return CircularProgressIndicator();
+                  }),
           borderRadius: radius,
         ));
   }
