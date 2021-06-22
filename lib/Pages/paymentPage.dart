@@ -18,7 +18,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   Future<List<PaymentCard>> myCardList;
-  PaymentCard selectedCard;
+  PaymentCard selectedCard = new PaymentCard();
   final FarkPlookFormModel form;
   final String uid;
   _PaymentPageState({@required this.form, @required this.uid});
@@ -91,8 +91,11 @@ class _PaymentPageState extends State<PaymentPage> {
             future: myCardList,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                selectedCard =
-                    snapshot.data.elementAt(snapshot.data.length - 1);
+                if (snapshot.data.length > 0) {
+                  selectedCard =
+                      snapshot.data.elementAt(snapshot.data.length - 1);
+                } else {}
+
                 form.card = selectedCard;
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -159,7 +162,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                   (this.selectedCard.cardno != null)
                                       ? Text(
                                           'xxxx xxxx xxxx ${this.selectedCard.cardno.substring(this.selectedCard.cardno.length - 4, this.selectedCard.cardno.length)} (${this.selectedCard.expireMonth}/${this.selectedCard.expireYear})')
-                                      : Text('Add Card'),
+                                      : Text('Please Add Card'),
                                 ],
                               ),
                               Container(

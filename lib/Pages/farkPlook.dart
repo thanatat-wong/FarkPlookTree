@@ -85,78 +85,67 @@ class _FarkPlookState extends State<FarkPlook> {
                 ? Expanded(
                     flex: 8,
                     child: SingleChildScrollView(
-                      child: RefreshIndicator(
-                        onRefresh: () {
-                          setState(() {
-                            lastedDonationList = fetchLastedDonation();
-                            topDonationList = fetchTopDonation();
-                          });
-                        },
-                        child: Column(
-                          children: [
-                            FutureBuilder<List<Donation>>(
-                              future: lastedDonationList,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.49,
-                                    width: 400,
-                                    child: new ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      reverse: false,
-                                      itemCount: snapshot.data.length,
-                                      itemBuilder: (BuildContext context,
-                                              int index) =>
-                                          FarkPlookCard(snapshot.data[index]),
-                                    ),
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return Text("${snapshot.error}");
-                                }
+                      child: Column(
+                        children: [
+                          FutureBuilder<List<Donation>>(
+                            future: lastedDonationList,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.49,
+                                  width: 400,
+                                  child: new ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    reverse: false,
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder: (BuildContext context,
+                                            int index) =>
+                                        FarkPlookCard(snapshot.data[index]),
+                                  ),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text("${snapshot.error}");
+                              }
 
-                                // By default, show a loading spinner.
-                                return CircularProgressIndicator();
-                              },
-                            ),
-                          ],
-                        ),
+                              // By default, show a loading spinner.
+                              return CircularProgressIndicator();
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   )
                 : Expanded(
                     flex: 8,
                     child: SingleChildScrollView(
-                      child: RefreshIndicator(
-                        onRefresh: fetchTopDonation,
-                        child: Column(
-                          children: [
-                            FutureBuilder<List<Donation>>(
-                              future: topDonationList,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return SizedBox(
-                                    height: 600,
-                                    width: 400,
-                                    child: new ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      reverse: false,
-                                      itemCount: snapshot.data.length,
-                                      itemBuilder: (BuildContext context,
-                                              int index) =>
-                                          FarkPlookCard(snapshot.data[index]),
-                                    ),
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return Text("${snapshot.error}");
-                                }
+                      child: Column(
+                        children: [
+                          FutureBuilder<List<Donation>>(
+                            future: topDonationList,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return SizedBox(
+                                  height: 600,
+                                  width: 400,
+                                  child: new ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    reverse: false,
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder: (BuildContext context,
+                                            int index) =>
+                                        FarkPlookCard(snapshot.data[index]),
+                                  ),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text("${snapshot.error}");
+                              }
 
-                                // By default, show a loading spinner.
-                                return CircularProgressIndicator();
-                              },
-                            ),
-                          ],
-                        ),
+                              // By default, show a loading spinner.
+                              return CircularProgressIndicator();
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ),
