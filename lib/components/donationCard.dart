@@ -63,7 +63,7 @@ class DonationCard extends StatelessWidget {
                                   " "+data.cardNum,
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 13,
+                                      fontSize: 11.5,
                                       fontWeight: FontWeight.normal),
                                 ),
                               ],
