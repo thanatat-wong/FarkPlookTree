@@ -56,7 +56,7 @@ class _CampaignHistoryState extends State<CampaignHistory> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "แคมเปญที่เคยสมัคร",
+          "แคมเปญที่เคยเข้าร่วม",
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.white),
         ),
