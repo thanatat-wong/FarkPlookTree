@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:farkplooktreeapp/Pages/joinCampaignHome.dart';
 import 'package:farkplooktreeapp/Pages/qrCodeForJoinCampaign.dart';
 import 'package:farkplooktreeapp/models/availableCampaign.dart';
 import 'package:farkplooktreeapp/models/registerCampaign.dart';
@@ -106,128 +107,7 @@ class _RegisterCampaignState extends State<RegisterCampaign> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: SizedBox(
-                          width: 350,
-                          height: 150,
-                          child: Row(
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional.topCenter,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 10, 0, 10),
-                                  child: Image.network(_path + data.thumbnail,
-                                      cacheHeight: 145, cacheWidth: 120),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: 6.0),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.17,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.03,
-                                      decoration: BoxDecoration(
-                                          color: Color(0XFF0F3754),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(3.0))),
-                                      child: new Center(
-                                        child: Text(
-                                          data.type,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 11),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 5.0),
-                                    Text(
-                                      data.name,
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(height: 6.0),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.calendar_today,
-                                          size: 15,
-                                        ),
-                                        SizedBox(width: 5.0),
-                                        Text(
-                                          (data.from_datetime.day.toString() ==
-                                                  data.to_datetime.day
-                                                      .toString())
-                                              ? DateFormat('dd MMMM yyyy')
-                                                      .format(
-                                                          data.from_datetime) +
-                                                  " " +
-                                                  DateFormat('kk:mm').format(
-                                                      data.from_datetime) +
-                                                  "-" +
-                                                  DateFormat('kk:mm')
-                                                      .format(data.to_datetime)
-                                              : (data.from_datetime.month.toString() ==
-                                                      data.to_datetime.month
-                                                          .toString())
-                                                  ? DateFormat('dd').format(
-                                                          data.from_datetime) +
-                                                      "-" +
-                                                      DateFormat('dd MMMM yyyy')
-                                                          .format(
-                                                              data.to_datetime)
-                                                  : DateFormat('dd MMMM yyyy kk:mm').format(
-                                                          data.from_datetime) +
-                                                      " -" +
-                                                      "\n" +
-                                                      DateFormat('dd MMMM yyyy kk:mm')
-                                                          .format(data.to_datetime),
-                                          style: TextStyle(fontSize: 13),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 6.0),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.location_on, size: 15),
-                                        SizedBox(width: 5.0),
-                                        Text(
-                                          data.location,
-                                          style: TextStyle(fontSize: 13),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 6.0),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.people, size: 15),
-                                        SizedBox(width: 5.0),
-                                        Text(
-                                          data.attendee +
-                                              "/" +
-                                              data.limitation +
-                                              " ผู้เข้าร่วม",
-                                          style: TextStyle(fontSize: 13),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
+                      CampaignCardNoRegisterBtn(data),
                       SizedBox(height: 10.0),
                       Card(
                         shape: RoundedRectangleBorder(
@@ -459,8 +339,8 @@ class _RegisterCampaignState extends State<RegisterCampaign> {
                       });
                       Navigator.push(context, MaterialPageRoute<void>(
                           builder: (BuildContext context) {
-                        return qrCodeForJoinCampaign(data,value.join_code);
-                          }));
+                        return qrCodeForJoinCampaign(data, value.join_code);
+                      }));
                     });
                   },
                 ),

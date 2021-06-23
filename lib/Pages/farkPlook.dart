@@ -66,7 +66,7 @@ class _FarkPlookState extends State<FarkPlook> {
                         ),
                         unSelectedTextStyle: TextStyle(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 16,
                         ),
                         selectedBackgroundColors: [Colors.white],
                         unSelectedBackgroundColors: [Color(0xff40A848)],

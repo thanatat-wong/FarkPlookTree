@@ -15,11 +15,20 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
-  Future<HomeData> kuydj;
+class _HomeState extends State<Home> with TickerProviderStateMixin {
+  AnimationController animationController;
+  String uid;
+  Future<HomeData> fetchedData;
+  String getUserID() {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User user = auth.currentUser;
+    uid = user.uid;
+    return uid;
+  }
+
   Future<HomeData> fetchHomeData() async {
-    final response =
-        await http.get(Uri.parse('http://52.163.100.154/api/fpt/homedata'));
+    final response = await http
+        .get(Uri.parse('http://52.163.100.154/api/fpt/homedata/$uid'));
 
     if (response.statusCode == 200) {
       HomeData data;
@@ -39,8 +48,22 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    kuydj = fetchHomeData();
+    uid = getUserID();
+    fetchedData = fetchHomeData();
     super.initState();
+    animationController = new AnimationController(
+      vsync: this,
+      duration: new Duration(seconds: 50),
+    );
+    animationController.repeat();
+  }
+
+  stopRotation() {
+    animationController.stop();
+  }
+
+  startRotation() {
+    animationController.repeat();
   }
 
   final PanelController _pc = PanelController();
@@ -59,6 +82,8 @@ class _HomeState extends State<Home> {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User user = auth.currentUser;
     final String uid = user.uid;
+    RegExp reg = new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    Function mathFunc = (Match match) => '${match[1]},';
     print(uid);
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -91,13 +116,13 @@ class _HomeState extends State<Home> {
           panelSnapping: true,
           onPanelOpened: () {
             setState(() {
-              kuydj = fetchHomeData();
+              fetchedData = fetchHomeData();
               openpanel = true;
             });
           },
           onPanelClosed: () {
             setState(() {
-              kuydj = fetchHomeData();
+              fetchedData = fetchHomeData();
               openpanel = false;
             });
           },
@@ -149,7 +174,11 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 "ฝากปลูก",
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
+                                    color: currentTab == 0
+                                        ? Color(0xFF0F3754)
+                                        : Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -175,6 +204,9 @@ class _HomeState extends State<Home> {
                                 child: Text("ร่วมแคมเปญ",
                                     style: TextStyle(
                                         fontSize: 20,
+                                        color: currentTab == 1
+                                            ? Color(0xFF0F3754)
+                                            : Colors.black,
                                         fontWeight: FontWeight.bold)),
                               )),
                         ],
@@ -196,16 +228,27 @@ class _HomeState extends State<Home> {
                     openpanel = false;
                   },
                   child: FutureBuilder<HomeData>(
-                      future: kuydj,
+                      future: fetchedData,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return Container(
                             child: Stack(
                               children: [
-                                Container(
-                                  margin: EdgeInsets.only(top: 60),
-                                  alignment: Alignment.topCenter,
-                                  child: Image.asset('images/world2.png'),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(8, 45, 8, 0),
+                                  child: AnimatedBuilder(
+                                    animation: animationController,
+                                    child: Container(
+                                      child: Image.asset('images/world2.png'),
+                                    ),
+                                    builder: (context, Widget _widget) {
+                                      return Transform.rotate(
+                                          angle:
+                                              animationController.value * 6.3,
+                                          child: _widget);
+                                    },
+                                  ),
                                 ),
                                 Container(
                                   alignment: Alignment.topCenter,
@@ -213,14 +256,14 @@ class _HomeState extends State<Home> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        'เราปลูกไปแล้ว',
+                                        'คุณปลูกไปแล้ว',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 30.0),
                                       ),
                                       Text(
-                                        '${snapshot.data.sumTreeAmount} ต้น',
+                                        '${snapshot.data.myplantedtree.toString().replaceAllMapped(reg, mathFunc)} ต้น',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
@@ -240,7 +283,7 @@ class _HomeState extends State<Home> {
                       }),
                 )
               : FutureBuilder<HomeData>(
-                  future: kuydj,
+                  future: fetchedData,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return Stack(
@@ -249,9 +292,17 @@ class _HomeState extends State<Home> {
                             alignment: Alignment.center,
                             child: Stack(
                               children: <Widget>[
-                                Container(
-                                  alignment: Alignment.center,
-                                  child: Image.asset('images/world.png'),
+                                AnimatedBuilder(
+                                  animation: animationController,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    child: Image.asset('images/world.png'),
+                                  ),
+                                  builder: (context, Widget _widget) {
+                                    return Transform.rotate(
+                                        angle: animationController.value * 6.3,
+                                        child: _widget);
+                                  },
                                 ),
                                 Container(
                                     alignment: Alignment.center,
@@ -266,14 +317,14 @@ class _HomeState extends State<Home> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              'เราปลูกไปแล้ว',
+                                              'รับฝากปลูกแล้ว',
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 30.0),
                                             ),
                                             Text(
-                                              '${snapshot.data.sumTreeAmount} ต้น',
+                                              '${snapshot.data.sumTreeAmount.toString().replaceAllMapped(reg, mathFunc)} ต้น',
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
@@ -332,7 +383,9 @@ class _HomeState extends State<Home> {
                       return Text("${snapshot.error}");
                     }
                     // By default, show a loading spinner.
-                    return CircularProgressIndicator();
+                    return SizedBox(
+                      width: 0,
+                    );
                   }),
           borderRadius: radius,
         ));
