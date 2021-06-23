@@ -262,13 +262,21 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 30.0),
                                       ),
-                                      Text(
-                                        '${snapshot.data.myplantedtree.toString().replaceAllMapped(reg, mathFunc)} ต้น',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 50.0),
-                                      ),
+                                      (snapshot.data.myplantedtree == null)
+                                          ? Text(
+                                              "0 ต้น",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 50.0),
+                                            )
+                                          : Text(
+                                              '${snapshot.data.myplantedtree.toString().replaceAllMapped(reg, mathFunc)} ต้น',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 50.0),
+                                            ),
                                     ],
                                   ),
                                 ),
