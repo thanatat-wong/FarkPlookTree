@@ -63,7 +63,7 @@ class _donationPageState extends State<donationPage> {
                   if (snapshot.hasData) {
                     return Expanded(
                       child: SizedBox(
-                        height: 680,
+                        height: MediaQuery.of(context).size.height * 0.85,
                         child: new ListView.builder(
                           scrollDirection: Axis.vertical,
                           reverse: false,

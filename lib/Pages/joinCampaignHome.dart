@@ -69,18 +69,18 @@ class CampaignCard extends StatelessWidget {
       children: [
         Stack(
           children: [
-            SizedBox(
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          blurRadius: 3,
-                          offset: Offset(2, 4))
-                    ]),
+            Container(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        blurRadius: 3,
+                        offset: Offset(2, 4))
+                  ]),
+              child: SizedBox(
                 child: Row(
                   children: [
                     Align(
