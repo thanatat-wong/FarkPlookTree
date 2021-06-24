@@ -72,6 +72,7 @@ class CampaignCard extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.26,
               child: Container(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -200,7 +201,7 @@ class CampaignCard extends StatelessWidget {
               child: Padding(
                   padding: EdgeInsets.fromLTRB(
                       0,
-                      MediaQuery.of(context).size.height * 0.195,
+                      MediaQuery.of(context).size.height * 0.210,
                       MediaQuery.of(context).size.width * 0.020,
                       0),
                   child: (data.isRegistered)
