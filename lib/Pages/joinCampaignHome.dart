@@ -70,7 +70,6 @@ class CampaignCard extends StatelessWidget {
         Stack(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.26,
               child: Container(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                 decoration: BoxDecoration(
@@ -162,18 +161,21 @@ class CampaignCard extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 6.0),
-                          Row(
-                            children: [
-                              Icon(Icons.location_on, size: 15),
-                              SizedBox(width: 5.0),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: Text(
-                                  data.location,
-                                  style: TextStyle(fontSize: 13),
+                          SizedBox(
+                            child: Row(
+                              children: [
+                                Icon(Icons.location_on, size: 15),
+                                SizedBox(width: 5.0),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.55,
+                                  child: Text(
+                                    data.location,
+                                    style: TextStyle(fontSize: 13),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           SizedBox(height: 6.0),
                           Row(
