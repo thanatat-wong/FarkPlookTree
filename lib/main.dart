@@ -175,11 +175,16 @@ class AuthenticationWrapper extends StatelessWidget {
           print(signUpModel.surname);
           print(signUpModel.name);
 
-          _context.read<AuthenticationService>().signUp(
-              email: signUpModel.email,
-              password: signUpModel.password,
-              firstname: signUpModel.name,
-              lastname: signUpModel.surname);
+          _context
+              .read<AuthenticationService>()
+              .signUp(
+                  email: signUpModel.email,
+                  password: signUpModel.password,
+                  firstname: signUpModel.name,
+                  lastname: signUpModel.surname)
+              .then((value) {
+            Navigator.of(_context).pop();
+          });
 
           isRequest(false);
         });

@@ -70,7 +70,7 @@ class CampaignCard extends StatelessWidget {
         Stack(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.25,
+              height: MediaQuery.of(context).size.height * 0.26,
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
